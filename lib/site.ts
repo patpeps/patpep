@@ -16,7 +16,7 @@ export const site = {
    * Used for canonical URLs, Open Graph, sitemap and robots.txt.
    * Change this to your real domain when you deploy.
    */
-  url: "https://pattersonpeptides.com",
+  url: "https://pattersonpeptides.org",
 } as const;
 
 export interface NavItem {

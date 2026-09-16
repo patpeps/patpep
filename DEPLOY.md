@@ -6,15 +6,10 @@ Firebase Hosting, which is Google's static host and has a free tier.
 
 ## 0. Before the first deploy
 
-Open [`lib/site.ts`](lib/site.ts) and set `url` to the domain you are going to use:
-
-```ts
-url: "https://yourdomain.com",
-```
-
-That value feeds the canonical URLs, the Open Graph tags, `robots.txt`, and the
-sitemap. Getting it wrong will not break the site, but search engines and link
-previews will point at the wrong host.
+`url` in [`lib/site.ts`](lib/site.ts) is already set to
+`https://pattersonpeptides.org`. That value feeds the canonical URLs, the Open
+Graph tags, `robots.txt`, and the sitemap. If the domain ever changes, change it
+there and rebuild.
 
 ## 1. Build
 
@@ -68,28 +63,51 @@ Every later deploy is the same two commands:
 npm run build && firebase deploy --only hosting
 ```
 
-## 5. Point your domain at it
+## 5. Point pattersonpeptides.org at it (IONOS)
 
-In the Firebase console: **Hosting → Add custom domain**. Enter your domain
-(add `www` as a second domain if you want both).
+The domain is registered at IONOS, and its DNS stays there. You are changing
+which server the domain points to, nothing else.
 
-Firebase will ask you to prove ownership and then give you DNS records to create:
+**First, clear the ICANN warning.** The domain page shows "Confirmation of
+contact details required". Find the verification email from IONOS and click the
+link. If that is not confirmed within 15 days of registration, the registry
+suspends the domain and the site goes dark no matter how the DNS is set.
 
-- a **TXT** record for verification, then
-- two **A** records for the apex domain (`yourdomain.com`), or
-- a **CNAME** record if you are setting up `www.yourdomain.com`.
+**Then, in the Firebase console:** Hosting -> Add custom domain ->
+`pattersonpeptides.org`. Firebase gives you a TXT record first, then two A
+records once ownership is verified. Use the exact values the console shows;
+they differ between projects.
 
-Add those records wherever your domain's DNS lives — that is your registrar's
-control panel. If you bought the domain through Google Domains, those domains
-were transferred to Squarespace, so the DNS settings are at
-https://account.squarespace.com/domains now. Cloudflare, Namecheap, GoDaddy and
-the rest all have an equivalent DNS page.
+**Then, in IONOS** (Domains & SSL -> pattersonpeptides.org -> DNS):
 
-Two things to expect:
+| Record | What to do |
+| --- | --- |
+| `A` `@` -> `74.208.236.129` | **Replace** with the first A record Firebase gives you, then add a second A record for the other value |
+| `AAAA` `@` -> `2607:f1c0:...` | **Delete.** That is the IONOS parking page over IPv6. Leaving it means IPv6 visitors keep seeing the old page |
+| `TXT` `@` (Firebase verification) | **Add** the value Firebase gives you. This sits alongside the existing SPF record; multiple TXT records at `@` are fine |
+| `MX` `@` (both mx00/mx01) | **Keep.** These are your email. Deleting them breaks mail |
+| `TXT` `@` `v=spf1 ...` | **Keep.** Email authentication |
+| `CNAME` `_dmarc`, `s1-ionos._domainkey`, `s2-ionos._domainkey`, `autodiscover` | **Keep.** All email |
+| `TXT` `_dep_ws_mutex`, `CNAME` `_domainconnect` | Harmless IONOS internals. Leave them |
 
-- DNS changes can take anything from a few minutes to a day to propagate.
-- Firebase provisions the SSL certificate automatically once it sees the records.
-  The domain shows as "needs setup" until that finishes, which is normal.
+To cover `www.pattersonpeptides.org` too, add it as a second custom domain in
+Firebase and create whatever record it asks for (usually a `CNAME` on the host
+`www`).
+
+**Do not buy the IONOS SSL certificate** it is prompting you for. Firebase issues
+and renews a free certificate automatically once the DNS records resolve. The
+domain will show "needs setup" in Firebase until that finishes, which is normal
+and usually takes under an hour, though DNS changes can take up to a day to
+spread.
+
+To check progress from your machine:
+
+```bash
+nslookup pattersonpeptides.org
+```
+
+When that returns the Firebase IPs instead of `74.208.236.129`, the change has
+gone through.
 
 ## Other hosts
 
