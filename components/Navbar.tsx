@@ -14,6 +14,8 @@ const TICKER = [
   "Not for use in diagnostic procedures",
   site.location,
   "In vitro / laboratory research",
+  "Qualified researchers only",
+  "21+",
 ];
 
 export default function Navbar() {
@@ -31,7 +33,7 @@ export default function Navbar() {
       {/* Standing notice ticker */}
       <div className="flex items-center gap-4 border-b border-rule-on-ink/70 px-4 py-2 sm:px-6">
         <span className="live-dot h-1.5 w-1.5 shrink-0 bg-acid" aria-hidden="true" />
-        <Marquee items={TICKER} />
+        <Marquee items={TICKER} duration={22} />
       </div>
 
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">

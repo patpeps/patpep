@@ -20,16 +20,16 @@ export const metadata: Metadata = {
 
 const POINTS = [
   {
-    title: "Patterson based",
-    body: `${site.name} is independently operated from ${site.location}.`,
+    title: "Where we are",
+    body: `${site.location}. We run this ourselves.`,
   },
   {
-    title: "Research purposes only",
-    body: "Materials are supplied for in vitro and laboratory research carried out by qualified researchers. They are not supplied for human or veterinary use.",
+    title: "Who it is for",
+    body: "Researchers doing in vitro and laboratory work. Not for people, not for animals.",
   },
   {
-    title: "Informational website",
-    body: "This website lists catalog information. It does not provide ordering, purchasing, checkout, or payment functionality.",
+    title: "What this site is",
+    body: "A catalog. It shows what we have and what it costs. You cannot check out here.",
   },
 ];
 
@@ -40,16 +40,14 @@ export default function AboutPage() {
         eyebrow="About"
         title={
           <>
-            A research
+            A small shop
             <br />
-            company in
-            <br />
-            <span className="display-light">Patterson.</span>
+            in<span className="display-light"> Patterson.</span>
           </>
         }
         meta={[
           ["Location", site.location],
-          ["Focus", "In vitro / laboratory research"],
+          ["Sells to", "Labs and researchers"],
         ]}
       />
 
@@ -57,26 +55,24 @@ export default function AboutPage() {
         <div className="grid gap-14 lg:grid-cols-[1.15fr_0.85fr]">
           <Reveal motion="left" className="max-w-2xl">
             <p className="lede">
-              {site.name} is a research company based in {site.location}. We focus on providing
-              research materials to qualified researchers and laboratories for in vitro and
-              laboratory research purposes.
+              {site.name} is a small research supply company in {site.location}. We sell research
+              materials to people doing in vitro and laboratory work, and that is the whole
+              business.
             </p>
             <p className="mt-6 text-sm leading-relaxed text-muted">
-              Our catalog is intentionally small and clearly described. Each listing states the
-              material, the amount where applicable, its current availability, and its intended
-              research use. We do not describe our materials in terms of health, therapeutic,
-              performance, or disease-related outcomes, and nothing on this website should be read
-              as medical advice.
+              We keep the catalog short on purpose. Every listing tells you what the material is,
+              how much is in the vial, whether we have it, and what it costs. You will not find
+              claims here about what anything does to a body, because that is not what we sell it
+              for and it is not ours to say. Nothing on this site is medical advice.
             </p>
 
-            <h2 className="display mt-14 text-4xl leading-none">Researcher responsibility</h2>
+            <h2 className="display mt-14 text-4xl leading-none">Your side of it</h2>
             <div className="trace-rule mt-5 w-20 opacity-90" aria-hidden="true" />
             <p className="mt-6 text-sm leading-relaxed text-muted">
-              Researchers are responsible for determining whether a material is appropriate for
-              their work, for handling and storing it safely, and for complying with the laws,
-              regulations, and institutional policies that apply to them. Materials should be
-              handled only by individuals trained in laboratory practice and appropriate safety
-              procedures.
+              Once it leaves us, the work is yours. You decide whether a material suits your
+              experiment, you store and handle it safely, and you follow whatever rules apply where
+              you are: your lab, your institution, your local ones. These materials belong in the
+              hands of people trained to work with them.
             </p>
 
             <DisclaimerBanner className="mt-10" />
@@ -86,7 +82,7 @@ export default function AboutPage() {
                 href="/catalog"
                 className="press group flex items-center gap-4 bg-ink px-6 py-4 text-on-ink hover:bg-acid hover:text-ink"
               >
-                <span className="label text-[0.65rem]">View research catalog</span>
+                <span className="label text-[0.65rem]">See the catalog</span>
                 <span className="arrow-shift" aria-hidden="true">
                   &rarr;
                 </span>

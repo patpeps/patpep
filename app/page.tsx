@@ -2,6 +2,7 @@ import Link from "next/link";
 import CountUp from "@/components/CountUp";
 import DisclaimerBanner from "@/components/DisclaimerBanner";
 import HeroTrace from "@/components/HeroTrace";
+import Marquee from "@/components/Marquee";
 import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
 import StatusBadge from "@/components/StatusBadge";
@@ -10,17 +11,24 @@ import { site } from "@/lib/site";
 
 const PRINCIPLES = [
   {
-    title: "Research focused",
-    body: "Materials are presented for in vitro and laboratory work by qualified researchers, with the intended use stated plainly on every listing.",
+    title: "Made for the bench",
+    body: "Everything we carry is meant for lab work, and we say so on every listing. We do not dress it up as anything else.",
   },
   {
-    title: "Patterson based",
-    body: `Independently operated from ${site.location}, serving researchers who want a local, responsive point of contact.`,
+    title: "Small and local",
+    body: `We run this ourselves out of ${site.location}. Ask a question and you are talking to the people who handle the material.`,
   },
   {
-    title: "Catalog, not commerce",
-    body: "Each listing states the amount, availability, and reference pricing where configured. No ordering or checkout takes place on this site.",
+    title: "A catalog, not a store",
+    body: "Each listing shows the amount, whether we have it, and the price where we have set one. There is no cart and no checkout.",
   },
+];
+
+const BAND = [
+  "Research use only",
+  "Patterson, California",
+  "In vitro only",
+  "Not for human or veterinary use",
 ];
 
 export default function HomePage() {
@@ -74,9 +82,9 @@ export default function HomePage() {
                 className="lede reveal mt-8 max-w-xl text-on-ink-muted"
                 style={{ "--d": "380ms" } as React.CSSProperties}
               >
-                {site.name} is a Patterson based research company. We provide research materials
-                intended solely for in vitro and laboratory research. This website is informational:
-                it lists catalog details and does not process orders or payments.
+                We are a small research supply company in {site.location}. Everything we carry is
+                for laboratory work only. This site is the catalog: you can see what we have, how
+                much of it, and what it costs. You cannot order here.
               </p>
 
               <div
@@ -87,7 +95,7 @@ export default function HomePage() {
                   href="/catalog"
                   className="press group flex items-center gap-4 bg-acid px-6 py-4 text-ink hover:bg-on-ink"
                 >
-                  <span className="label text-[0.65rem]">View research catalog</span>
+                  <span className="label text-[0.65rem]">See what we have</span>
                   <span className="arrow-shift" aria-hidden="true">
                     &rarr;
                   </span>
@@ -96,7 +104,7 @@ export default function HomePage() {
                   href="/contact"
                   className="label press border border-rule-on-ink px-6 py-4 text-[0.65rem] text-on-ink hover:border-acid hover:text-acid"
                 >
-                  Contact
+                  Ask us something
                 </Link>
               </div>
             </div>
@@ -146,14 +154,26 @@ export default function HomePage() {
         <HeroTrace className="pointer-events-none absolute inset-x-0 bottom-0 h-24 text-acid/45" />
       </section>
 
+      {/* ── Moving band ──────────────────────────────────────────────── */}
+      <div className="border-y border-rule bg-acid py-4 text-ink">
+        <Marquee
+          items={BAND}
+          size="lg"
+          duration={34}
+          reverse
+          itemClassName="text-ink"
+          dotClassName="bg-ink"
+        />
+      </div>
+
       {/* ── Figures ──────────────────────────────────────────────────── */}
       <section className="border-b border-rule bg-paper-2">
         <dl className="mx-auto grid max-w-6xl grid-cols-2 divide-rule sm:grid-cols-4 sm:divide-x">
           {[
-            { value: products.length, label: "Catalog listings" },
-            { value: countByStatus("available"), label: "Currently available" },
-            { value: countByStatus("pending"), label: "Pending" },
-            { value: 21, label: "Researcher acknowledgement", suffix: "+", pad: 0 },
+            { value: products.length, label: "Things we list" },
+            { value: countByStatus("available"), label: "In stock now" },
+            { value: countByStatus("pending"), label: "On the way" },
+            { value: 21, label: "Minimum age to browse", suffix: "+", pad: 0 },
           ].map((figure, index) => (
             <Reveal
               key={figure.label}
@@ -164,11 +184,7 @@ export default function HomePage() {
               } ${index % 2 === 0 ? "border-r border-rule sm:border-r-0" : ""}`}
             >
               <dt className="display text-5xl leading-none">
-                <CountUp
-                  value={figure.value}
-                  pad={figure.pad ?? 2}
-                  suffix={figure.suffix ?? ""}
-                />
+                <CountUp value={figure.value} pad={figure.pad ?? 2} suffix={figure.suffix ?? ""} />
               </dt>
               <dd className="label mt-3 text-[0.55rem] text-muted">{figure.label}</dd>
             </Reveal>
@@ -179,7 +195,7 @@ export default function HomePage() {
       {/* ── Principles ───────────────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
         <Reveal as="p" motion="left" className="label text-[0.58rem] text-muted">
-          How we operate
+          How we work
         </Reveal>
         <div className="mt-10 grid gap-px border border-rule bg-rule md:grid-cols-3">
           {PRINCIPLES.map((principle, index) => (
@@ -206,11 +222,11 @@ export default function HomePage() {
       <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6 sm:pb-28">
         <Reveal className="flex flex-wrap items-end justify-between gap-6 border-b border-rule pb-6">
           <div>
-            <p className="label text-[0.58rem] text-muted">Selection</p>
-            <h2 className="display mt-4 text-5xl leading-none sm:text-6xl">From the catalog</h2>
+            <p className="label text-[0.58rem] text-muted">What we carry</p>
+            <h2 className="display mt-4 text-5xl leading-none sm:text-6xl">In the catalog</h2>
           </div>
           <Link href="/catalog" className="label link-sweep press pb-1 text-[0.6rem]">
-            All listings &rarr;
+            See all &rarr;
           </Link>
         </Reveal>
 
@@ -230,22 +246,20 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <Reveal motion="left">
-              <p className="label text-[0.58rem] text-acid">Intended use</p>
+              <p className="label text-[0.58rem] text-acid">What this is for</p>
               <h2 className="display mt-6 text-5xl leading-[0.92] sm:text-6xl">
-                Stated plainly,
+                Read this part
                 <br />
-                on every listing.
+                before you order.
               </h2>
               <div className="trace-rule mt-8 w-28 opacity-80" aria-hidden="true" />
             </Reveal>
             <Reveal delay={140}>
               <p className="lede text-on-ink-muted">
-                {site.name} provides research materials exclusively for qualified research purposes.
-                Products displayed on this website are intended solely for in vitro and laboratory
-                research and are not intended for human consumption, human administration,
-                veterinary use, or diagnostic procedures. Products have not been evaluated by the
-                U.S. Food and Drug Administration for safety or efficacy for human or veterinary
-                use.
+                {site.name} sells to researchers, for research. What we list is meant for in vitro
+                and laboratory use and nothing else: not for people, not for animals, and not for
+                diagnosing anything. None of it has been evaluated by the U.S. Food and Drug
+                Administration for safety or efficacy in humans or animals.
               </p>
               <DisclaimerBanner tone="ink" className="mt-8" />
             </Reveal>

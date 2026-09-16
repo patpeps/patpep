@@ -9,7 +9,7 @@ export const site = {
   tagline: "Research Use Only",
   location: "Patterson, California",
   description:
-    "Patterson Peptides is a Patterson, California based research company supplying research materials to qualified researchers for in vitro and laboratory use.",
+    "A small research supply company in Patterson, California. We sell research materials to qualified researchers for in vitro and laboratory use only.",
   instagramHandle: "@PattersonPeptides",
   instagramUrl: "https://instagram.com/PattersonPeptides",
   /**

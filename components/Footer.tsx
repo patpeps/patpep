@@ -54,8 +54,7 @@ export default function Footer() {
               </span>
             </a>
             <p className="mt-4 text-xs leading-relaxed text-on-ink-muted">
-              General research and business inquiries only. No ordering process is offered through
-              Instagram.
+              Questions about the catalog, or anything else, are welcome here.
             </p>
           </div>
         </div>

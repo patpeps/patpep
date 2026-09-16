@@ -75,7 +75,7 @@ export const products: Product[] = [
     subtitle: "RETA",
     category: "peptides",
     description:
-      "Lyophilized research peptide supplied for in vitro and laboratory research applications by qualified researchers.",
+      "A lyophilized peptide, sold by the vial for lab work. Reconstitute it yourself with bacteriostatic water.",
     amount: "10 mg",
     price: "$50",
     status: "available",
@@ -89,8 +89,8 @@ export const products: Product[] = [
     subtitle: "Copper tripeptide-1",
     category: "peptides",
     description:
-      "Copper-binding tripeptide supplied for in vitro and laboratory research applications by qualified researchers.",
-    amount: null,
+      "A copper-binding tripeptide, lyophilized. We are not carrying this one yet — it is listed here so you know it is coming.",
+    amount: "50 mg",
     price: null,
     status: "pending",
     visible: true,
@@ -103,7 +103,7 @@ export const products: Product[] = [
     subtitle: "Laboratory supply",
     category: "supplies",
     description:
-      "Laboratory-use diluent for reconstitution of lyophilized research materials in a research setting.",
+      "Sterile diluent for reconstituting lyophilized material at the bench. Most people order it alongside a peptide.",
     amount: "3 mL",
     price: "$5",
     status: "available",
@@ -127,12 +127,12 @@ export const categories: Category[] = [
   {
     id: "peptides",
     label: "Research Peptides",
-    description: "Lyophilized peptides for in vitro and laboratory research.",
+    description: "Lyophilized peptides, sold by the vial for lab work.",
   },
   {
     id: "supplies",
     label: "Laboratory Supplies",
-    description: "Supporting materials for handling research compounds.",
+    description: "The bits and pieces you need to actually work with them.",
   },
 ];
 

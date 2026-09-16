@@ -278,6 +278,15 @@ body {
   }
 }
 
+@keyframes marquee-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 @keyframes page-in {
   from {
     opacity: 0;
@@ -422,7 +431,12 @@ body {
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 38s linear infinite;
+  align-items: center;
+  animation: marquee 26s linear infinite;
+}
+
+.marquee-reverse {
+  animation-name: marquee-reverse;
 }
 
 .marquee:hover .marquee-track {

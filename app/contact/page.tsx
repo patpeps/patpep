@@ -19,9 +19,10 @@ export const metadata: Metadata = {
 };
 
 const TOPICS = [
-  "General business and research inquiries",
-  "Questions about catalog information, amounts, or availability",
-  "Questions about the intended research use of a listed material",
+  "What we have in stock, and how much",
+  "When something on the list is coming back",
+  "What a listed material actually is",
+  "Anything else about the business",
 ];
 
 export default function ContactPage() {
@@ -31,12 +32,10 @@ export default function ContactPage() {
         eyebrow="Contact"
         title={
           <>
-            Get in
-            <br />
-            <span className="display-light">touch.</span>
+            Say<span className="display-light"> hello.</span>
           </>
         }
-        lede={`${site.name} is a Patterson based research company. We welcome general business and research inquiries, including questions about catalog information and availability.`}
+        lede="Instagram is the quickest way to reach us. Ask about anything in the catalog: what we have, how much is left, when something is coming back."
       />
 
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
@@ -49,7 +48,7 @@ export default function ContactPage() {
               <p className="label text-[0.58rem] text-acid">Primary channel</p>
               <h2 className="display mt-5 text-4xl leading-none sm:text-5xl">Instagram</h2>
               <p className="mt-5 max-w-sm text-sm leading-relaxed text-on-ink-muted">
-                The fastest way to reach us is through our Instagram profile.
+                Send us a message. We read them.
               </p>
               <p className="mt-8 font-mono text-lg text-on-ink sm:text-xl">
                 {site.instagramHandle}
@@ -77,7 +76,6 @@ export default function ContactPage() {
               </p>
               <address className="display mt-5 text-3xl not-italic leading-tight">
                 {site.name}
-                <span className="block text-2xl text-muted">Patterson based research company</span>
                 <span className="block text-2xl text-muted">{site.location}</span>
               </address>
             </Reveal>
@@ -85,7 +83,7 @@ export default function ContactPage() {
             <Reveal as="section" delay={200} className="border border-rule p-8">
               <p className="label flex items-center gap-2 text-[0.55rem] text-muted">
                 <MessagesSquare className="h-3.5 w-3.5 text-acid-deep" aria-hidden="true" />
-                What we can help with
+                Things worth asking
               </p>
               <ul className="mt-5 divide-y divide-rule border-y border-rule">
                 {TOPICS.map((topic, index) => (
@@ -98,9 +96,7 @@ export default function ContactPage() {
                 ))}
               </ul>
               <p className="mt-5 text-xs leading-relaxed text-muted">
-                This website is informational. It does not accept orders, and no ordering or
-                purchasing process is offered through Instagram or any other channel listed on this
-                page.
+                This site is a catalog, not a store. Nothing here takes an order or a payment.
               </p>
             </Reveal>
           </div>

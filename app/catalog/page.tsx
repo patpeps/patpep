@@ -20,9 +20,9 @@ export const metadata: Metadata = {
 };
 
 const KEY = [
-  ["Available", "Currently listed as in stock for qualified research use."],
-  ["Coming Soon / Pending", "Not currently offered. Listed for information only."],
-  ["Unavailable", "Not currently offered and no timeline is listed."],
+  ["Available", "We have it on hand."],
+  ["Coming Soon / Pending", "Not here yet, but it is on the way."],
+  ["Unavailable", "We are not carrying this at the moment."],
 ];
 
 export default function CatalogPage() {
@@ -40,7 +40,7 @@ export default function CatalogPage() {
             Catalog
           </>
         }
-        lede={`The listings below describe research materials supplied by ${site.name} for in vitro and laboratory research by qualified researchers. Amounts, availability, and any reference pricing are shown for information only — this website does not provide ordering, purchasing, or payment functionality.`}
+        lede="Here is everything we carry, what it costs, and whether we actually have it right now. It is all for lab work only. There is no cart on this site, so if you want something, message us and we will sort it out from there."
         meta={[
           ["Listings", String(all.length).padStart(2, "0")],
           ["Categories", String(activeCategories.length).padStart(2, "0")],
@@ -54,7 +54,7 @@ export default function CatalogPage() {
 
         {activeCategories.length === 0 ? (
           <p className="mt-16 border border-dashed border-rule-strong p-16 text-center text-sm text-muted">
-            No catalog listings are currently published.
+            Nothing listed right now. Check back soon.
           </p>
         ) : (
           <div className="mt-16 space-y-20">
@@ -94,7 +94,7 @@ export default function CatalogPage() {
         {/* Availability key */}
         <Reveal as="section" className="mt-20 border border-rule bg-paper-2">
           <h2 className="label border-b border-rule px-6 py-4 text-[0.58rem] text-muted">
-            Availability key
+            What the labels mean
           </h2>
           <dl className="grid divide-y divide-rule sm:grid-cols-3 sm:divide-x sm:divide-y-0">
             {KEY.map(([term, definition], index) => (
