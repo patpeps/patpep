@@ -104,7 +104,7 @@ export default function DisclaimerPage() {
   return (
     <LegalPage
       eyebrow="Legal"
-      title="Disclaimer"
+      title={<>Disclaimer</>}
       updated="September 16, 2026"
       intro={`${site.name} provides research materials exclusively for qualified research purposes. Please read this disclaimer in full before using this website or any material described on it.`}
       sections={SECTIONS}

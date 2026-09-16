@@ -1,6 +1,5 @@
 "use client";
 
-import { RotateCcw } from "lucide-react";
 import { clearVerified } from "@/lib/verification";
 
 /**
@@ -17,9 +16,8 @@ export default function ResetVerification() {
     <button
       type="button"
       onClick={clearVerified}
-      className="inline-flex items-center gap-1.5 rounded-md border border-dashed border-border px-2.5 py-1.5 text-xs text-muted transition-colors hover:border-accent/50 hover:text-accent"
+      className="label border border-dashed border-rule-on-ink px-3 py-2 text-[0.55rem] text-on-ink-muted transition-colors duration-200 hover:border-acid hover:text-acid"
     >
-      <RotateCcw className="h-3 w-3" aria-hidden="true" />
       Reset verification (dev only)
     </button>
   );

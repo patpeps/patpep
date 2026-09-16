@@ -106,7 +106,13 @@ export default function PrivacyPage() {
   return (
     <LegalPage
       eyebrow="Legal"
-      title="Privacy Policy"
+      title={
+        <>
+          Privacy
+          <br />
+          Policy
+        </>
+      }
       updated="September 16, 2026"
       intro="This policy describes what this informational website does and does not collect. It is deliberately narrow, because the site itself asks for nothing from you."
       sections={SECTIONS}

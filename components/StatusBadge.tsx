@@ -1,29 +1,34 @@
-import { CircleDashed, CircleSlash, CircleCheck } from "lucide-react";
 import type { ProductStatus } from "@/data/products";
 import { cn } from "@/lib/utils";
 
 /**
- * Availability badge. The label and styling for every status live here, so
- * changing `status` in /data/products.ts updates the whole site.
+ * Availability chip. Status is never carried by colour alone — every chip
+ * pairs its dot with a written label.
+ *
+ * The label and styling for every status live here, so changing `status` in
+ * /data/products.ts updates the whole site.
  */
 const STATUS_CONFIG: Record<
   ProductStatus,
-  { label: string; className: string; icon: typeof CircleCheck }
+  { label: string; surface: string; dot: string; onInk: string }
 > = {
   available: {
     label: "Available",
-    className: "border-emerald-200 bg-emerald-50 text-emerald-700",
-    icon: CircleCheck,
+    surface: "border-acid-deep/35 bg-acid/25 text-text",
+    dot: "bg-acid-deep",
+    onInk: "border-acid/40 bg-acid/15 text-acid",
   },
   pending: {
     label: "Coming Soon / Pending",
-    className: "border-amber-200 bg-amber-50 text-amber-700",
-    icon: CircleDashed,
+    surface: "border-oxide/30 bg-oxide-soft text-text",
+    dot: "bg-oxide",
+    onInk: "border-oxide/50 bg-oxide/15 text-oxide-soft",
   },
   unavailable: {
     label: "Unavailable",
-    className: "border-slate-200 bg-slate-100 text-slate-600",
-    icon: CircleSlash,
+    surface: "border-rule-strong bg-paper-3 text-muted",
+    dot: "bg-rule-strong",
+    onInk: "border-rule-on-ink bg-ink-3 text-on-ink-muted",
   },
 };
 
@@ -33,23 +38,32 @@ export function statusLabel(status: ProductStatus): string {
 
 export default function StatusBadge({
   status,
+  tone = "paper",
   className,
 }: {
   status: ProductStatus;
+  tone?: "paper" | "ink";
   className?: string;
 }) {
-  const { label, className: statusClass, icon: Icon } = STATUS_CONFIG[status];
+  const config = STATUS_CONFIG[status];
 
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium",
-        statusClass,
+        "label inline-flex items-center gap-2 border px-2.5 py-1.5 text-[0.58rem]",
+        tone === "ink" ? config.onInk : config.surface,
         className,
       )}
     >
-      <Icon className="h-3.5 w-3.5" aria-hidden="true" />
-      <span>{label}</span>
+      <span
+        className={cn(
+          "h-1.5 w-1.5 shrink-0",
+          tone === "ink" && status === "available" ? "bg-acid" : config.dot,
+          status === "available" && "live-dot",
+        )}
+        aria-hidden="true"
+      />
+      {config.label}
     </span>
   );
 }

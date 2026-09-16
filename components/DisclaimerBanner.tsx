@@ -2,43 +2,41 @@ import Link from "next/link";
 import { TriangleAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type Variant = "bar" | "card";
-
 /**
- * Research-use notice. `bar` is the thin strip used under the navbar;
- * `card` is the boxed version used inside page content.
+ * Research-use notice. `card` sits in page content on paper; `ink` is the
+ * inverted version for dark slabs.
  */
 export default function DisclaimerBanner({
-  variant = "card",
+  tone = "card",
   className,
   children,
 }: {
-  variant?: Variant;
+  tone?: "card" | "ink";
   className?: string;
   children?: React.ReactNode;
 }) {
-  if (variant === "bar") {
-    return (
-      <div
-        className={cn(
-          "border-b border-slate-800 bg-slate-900 px-4 py-2 text-center text-[11px] font-medium uppercase tracking-[0.14em] text-slate-200 sm:text-xs",
-          className,
-        )}
-      >
-        Research Use Only &middot; Not for human or veterinary use
-      </div>
-    );
-  }
+  const onInk = tone === "ink";
 
   return (
     <aside
       className={cn(
-        "flex gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-relaxed text-amber-900",
+        "relative border-l-2 py-4 pl-5 pr-4",
+        onInk
+          ? "on-ink border-acid bg-ink-2 text-on-ink-muted"
+          : "border-oxide bg-oxide-soft/60 text-text",
         className,
       )}
     >
-      <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-      <p>
+      <p
+        className={cn(
+          "label mb-2 flex items-center gap-2 text-[0.55rem]",
+          onInk ? "text-acid" : "text-oxide-deep",
+        )}
+      >
+        <TriangleAlert className="h-3.5 w-3.5" aria-hidden="true" />
+        Notice
+      </p>
+      <p className="text-sm leading-relaxed">
         {children ?? (
           <>
             Products presented on this website are intended solely for in vitro and laboratory
@@ -46,7 +44,13 @@ export default function DisclaimerBanner({
             administration, veterinary use, or diagnostic procedures, and have not been evaluated by
             the U.S. Food and Drug Administration for safety or efficacy for human or veterinary
             use.{" "}
-            <Link href="/disclaimer" className="font-medium underline underline-offset-2">
+            <Link
+              href="/disclaimer"
+              className={cn(
+                "link-sweep font-medium",
+                onInk ? "text-acid" : "text-text",
+              )}
+            >
               Read the full disclaimer
             </Link>
             .

@@ -1,89 +1,96 @@
 import Image from "next/image";
-import { Beaker, FlaskConical, Tag } from "lucide-react";
 import StatusBadge from "@/components/StatusBadge";
 import type { Product } from "@/data/products";
 import { cn } from "@/lib/utils";
 
 /**
- * Informational catalog card. Every value comes from /data/products.ts —
- * there is no ordering, cart, or checkout anywhere on this site.
+ * Specimen record card. Every value comes from /data/products.ts — this site
+ * is informational, so there is no ordering, cart, or checkout anywhere.
  */
-export default function ProductCard({ product }: { product: Product }) {
-  const dimmed = product.status !== "available";
+export default function ProductCard({
+  product,
+  index,
+  delay = 0,
+}: {
+  product: Product;
+  index?: number;
+  delay?: number;
+}) {
+  const muted = product.status !== "available";
 
   return (
     <article
       id={product.id}
-      className="group flex scroll-mt-28 flex-col overflow-hidden rounded-xl border border-border bg-background shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-md"
+      style={{ "--d": `${delay}ms` } as React.CSSProperties}
+      className="reveal group relative flex scroll-mt-32 flex-col border border-rule bg-paper transition-colors duration-300 hover:border-ink"
     >
-      <div className="lab-grid relative flex h-40 items-center justify-center border-b border-border bg-surface">
+      {/* Record header */}
+      <div className="flex items-center justify-between border-b border-rule px-4 py-2.5">
+        <span className="label text-[0.55rem] text-muted">
+          {typeof index === "number" ? `Rec. ${String(index + 1).padStart(3, "0")}` : "Record"}
+        </span>
+        <span className="label text-[0.55rem] text-muted">Research use only</span>
+      </div>
+
+      {/* Plate */}
+      <div className="graph-paper relative flex h-44 items-center justify-center overflow-hidden border-b border-rule bg-paper-2">
         {product.image ? (
           <Image
             src={product.image}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className={cn("object-cover", dimmed && "opacity-70")}
+            className={cn("object-cover", muted && "opacity-75 saturate-50")}
           />
         ) : (
-          <span
-            className={cn(
-              "flex flex-col items-center gap-2 text-muted transition-colors group-hover:text-accent",
-              dimmed && "opacity-70",
-            )}
-            aria-hidden="true"
-          >
-            {product.category === "supplies" ? (
-              <Beaker className="h-8 w-8" strokeWidth={1.25} />
-            ) : (
-              <FlaskConical className="h-8 w-8" strokeWidth={1.25} />
-            )}
-            {product.amount && (
-              <span className="font-mono text-xs tracking-tight">{product.amount}</span>
-            )}
-          </span>
+          <>
+            <span
+              aria-hidden="true"
+              className={cn(
+                "display text-6xl leading-none transition-transform duration-500 group-hover:-translate-y-0.5",
+                muted ? "text-rule-strong" : "text-ink/85",
+              )}
+            >
+              {product.amount ?? "—"}
+            </span>
+            <span
+              aria-hidden="true"
+              className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-ink transition-transform duration-500 group-hover:scale-x-100"
+            />
+          </>
         )}
-        <span className="absolute left-3 top-3 rounded-full border border-border bg-background/90 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
-          Research Use Only
-        </span>
       </div>
 
+      {/* Body */}
       <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <h3 className="text-lg font-semibold tracking-tight">{product.name}</h3>
-            {product.subtitle && <p className="mt-0.5 text-xs text-muted">{product.subtitle}</p>}
-          </div>
-        </div>
+        <h3 className="display text-[2rem] leading-none">{product.name}</h3>
+        {product.subtitle && (
+          <p className="label mt-2.5 text-[0.58rem] text-muted">{product.subtitle}</p>
+        )}
 
-        <StatusBadge status={product.status} className="mt-3 self-start" />
+        <StatusBadge status={product.status} className="mt-4 self-start" />
 
         <p className="mt-4 text-sm leading-relaxed text-muted">{product.description}</p>
 
-        <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-border pt-4 text-sm">
-          <div>
-            <dt className="text-xs uppercase tracking-[0.12em] text-muted">Amount</dt>
-            <dd className="mt-1 font-medium">{product.amount ?? "—"}</dd>
+        <dl className="mt-5 divide-y divide-rule border-y border-rule">
+          <div className="flex items-baseline justify-between gap-4 py-2.5">
+            <dt className="label text-[0.55rem] text-muted">Amount</dt>
+            <dd className="font-mono text-sm">{product.amount ?? "—"}</dd>
           </div>
-          <div>
-            <dt className="text-xs uppercase tracking-[0.12em] text-muted">Reference price</dt>
-            <dd className="mt-1 flex items-center gap-1.5 font-medium">
-              {product.price ? (
-                <>
-                  <Tag className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-                  {product.price}
-                </>
-              ) : (
-                "—"
-              )}
-            </dd>
+          <div className="flex items-baseline justify-between gap-4 py-2.5">
+            <dt className="label text-[0.55rem] text-muted">Reference price</dt>
+            <dd className="font-mono text-sm">{product.price ?? "—"}</dd>
           </div>
         </dl>
 
-        <p className="mt-4 border-t border-border pt-4 text-xs leading-relaxed text-muted">
-          {product.disclaimer}
-        </p>
+        <p className="mt-4 text-xs leading-relaxed text-muted">{product.disclaimer}</p>
       </div>
+
+      {/* Accent rule on hover */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-acid transition-transform duration-500 group-hover:scale-x-100"
+      />
     </article>
   );
 }

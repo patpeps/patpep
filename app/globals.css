@@ -1,29 +1,72 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+ *  PATTERSON PEPTIDES — DESIGN SYSTEM
+ *
+ *  Aesthetic: technical archive. Ink-on-bone paper, instrument-panel dark
+ *  slabs, one acid accent borrowed from a chromatogram trace. Typography
+ *  pairs a high-contrast display serif with a technical sans and mono.
+ *
+ *  Accent rule: --acid is bright and only ever carries DARK text or sits on
+ *  a DARK surface. Never use it for small text on paper.
+ * ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --surface: #f8fafc;
-  --surface-2: #f1f5f9;
-  --border: #e2e8f0;
-  --foreground: #0f172a;
-  --muted: #64748b;
-  --accent: #1d4ed8;
-  --accent-hover: #1e40af;
-  --accent-soft: #eff6ff;
+  /* Surfaces */
+  --paper: #f4f1e8;
+  --paper-2: #ebe6d9;
+  --paper-3: #e2dccb;
+  --ink: #14130f;
+  --ink-2: #1e1c17;
+  --ink-3: #2c2921;
+
+  /* Lines */
+  --rule: #d5cebd;
+  --rule-strong: #b9b1a0;
+  --rule-dark: #34302708;
+  --rule-on-ink: #3a362c;
+
+  /* Text */
+  --text: #14130f;
+  --text-muted: #5d594d;
+  --text-on-ink: #f0ece1;
+  --text-on-ink-muted: #a39d8c;
+
+  /* Accent */
+  --acid: #c9f24d;
+  --acid-dim: #9cbb2f;
+  --acid-deep: #4f6710;
+  --oxide: #b4551a;
+  --oxide-deep: #883c0c;
+  --oxide-soft: #f3e3d3;
+
+  --focus: var(--ink);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-border: var(--border);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-accent-soft: var(--accent-soft);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-paper-3: var(--paper-3);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-rule-on-ink: var(--rule-on-ink);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-on-ink: var(--text-on-ink);
+  --color-on-ink-muted: var(--text-on-ink-muted);
+  --color-acid: var(--acid);
+  --color-acid-dim: var(--acid-dim);
+  --color-acid-deep: var(--acid-deep);
+  --color-oxide: var(--oxide);
+  --color-oxide-deep: var(--oxide-deep);
+  --color-oxide-soft: var(--oxide-soft);
+
+  --font-display: var(--font-instrument-serif);
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
 }
 
 html {
@@ -32,33 +75,66 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 350;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Visible, consistent keyboard focus everywhere. */
+/* --------------------------------------------------------------------------
+ *  Typography primitives
+ * ----------------------------------------------------------------------- */
+
+.display {
+  font-family: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+
+/* Small uppercase technical label. Used for eyebrows, table headers, chips. */
+.label {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.lede {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+@media (min-width: 640px) {
+  .lede {
+    font-size: 1.1875rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+ *  Focus + selection
+ * ----------------------------------------------------------------------- */
+
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.on-ink :focus-visible,
+.on-ink:focus-visible {
+  --focus: var(--acid);
 }
 
 ::selection {
-  background: var(--accent);
-  color: #ffffff;
+  background: var(--acid);
+  color: var(--ink);
 }
 
-/* Subtle laboratory grid used behind hero and product imagery. */
-.lab-grid {
-  background-image:
-    linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
-  background-size: 44px 44px;
-}
-
-/* Skip link, revealed on focus. */
 .skip-link {
   position: absolute;
   left: -9999px;
@@ -68,16 +144,69 @@ body {
 .skip-link:focus {
   left: 1rem;
   top: 1rem;
-  padding: 0.6rem 1rem;
-  background: var(--foreground);
-  color: #ffffff;
-  border-radius: 6px;
+  padding: 0.65rem 1rem;
+  background: var(--acid);
+  color: var(--ink);
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-@keyframes pp-fade-up {
+/* --------------------------------------------------------------------------
+ *  Surface textures — atmosphere instead of flat fills
+ * ----------------------------------------------------------------------- */
+
+/* Fine paper stipple. */
+.grain {
+  background-image: radial-gradient(rgba(20, 19, 15, 0.05) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+/* Engineering graph paper. */
+.graph-paper {
+  background-image:
+    linear-gradient(to right, rgba(20, 19, 15, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 19, 15, 0.055) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Instrument console grid, for ink slabs. */
+.console-grid {
+  background-image:
+    linear-gradient(to right, rgba(240, 236, 225, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(240, 236, 225, 0.05) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+/* Soft pool of light, layered under grids for depth. */
+.halo {
+  background:
+    radial-gradient(80% 60% at 12% 0%, rgba(201, 242, 77, 0.14), transparent 60%),
+    radial-gradient(60% 50% at 100% 20%, rgba(180, 85, 26, 0.16), transparent 65%);
+}
+
+.halo-paper {
+  background:
+    radial-gradient(70% 55% at 85% 0%, rgba(201, 242, 77, 0.3), transparent 62%),
+    radial-gradient(60% 45% at 0% 10%, rgba(180, 85, 26, 0.09), transparent 60%);
+}
+
+/* Chromatogram trace divider. */
+.trace-rule {
+  height: 2px;
+  background:
+    repeating-linear-gradient(to right, var(--acid) 0 12px, transparent 12px 20px);
+}
+
+/* --------------------------------------------------------------------------
+ *  Motion — one orchestrated page-load, plus restrained hover states
+ * ----------------------------------------------------------------------- */
+
+@keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(18px);
   }
   to {
     opacity: 1;
@@ -85,34 +214,74 @@ body {
   }
 }
 
-@keyframes pp-fade-in {
+@keyframes wipe-in {
   from {
-    opacity: 0;
+    clip-path: inset(0 100% 0 0);
   }
   to {
-    opacity: 1;
+    clip-path: inset(0 0 0 0);
   }
 }
 
-@keyframes pp-scale-in {
+@keyframes draw-rule {
   from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.98);
+    transform: scaleX(0);
   }
   to {
-    opacity: 1;
-    transform: none;
+    transform: scaleX(1);
   }
 }
 
-.animate-fade-up {
-  animation: pp-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
 }
-.animate-fade-in {
-  animation: pp-fade-in 0.3s ease-out both;
+
+.reveal {
+  animation: rise 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0s);
 }
-.animate-scale-in {
-  animation: pp-scale-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+.wipe {
+  animation: wipe-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
+.rule-draw {
+  transform-origin: left;
+  animation: draw-rule 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
+.live-dot {
+  animation: pulse-dot 2.8s ease-in-out infinite;
+}
+
+/* Link with an underline that sweeps in from the left. */
+.link-sweep {
+  position: relative;
+}
+.link-sweep::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-sweep:hover::after,
+.link-sweep:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 @media (prefers-reduced-motion: reduce) {

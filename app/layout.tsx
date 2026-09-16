@@ -1,14 +1,36 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Instrument_Serif } from "next/font/google";
 import "./globals.css";
-import DisclaimerBanner from "@/components/DisclaimerBanner";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import VerificationModal from "@/components/VerificationModal";
 import { site } from "@/lib/site";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+/**
+ * Type system: a high-contrast display serif against a technical sans/mono
+ * pair. Deliberately not a default UI font.
+ */
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const plexSans = IBM_Plex_Sans({
+  variable: "--font-plex-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -35,7 +57,7 @@ export const metadata: Metadata = {
     locale: "en_US",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: `${site.name} — Research Materials for Qualified Researchers`,
     description: site.description,
   },
@@ -45,15 +67,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${instrumentSerif.variable} ${plexSans.variable} ${plexMono.variable} antialiased`}
+      >
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
-        <DisclaimerBanner variant="bar" />
         <Navbar />
-        <main id="main" className="min-h-[60vh]">
-          {children}
-        </main>
+        <main id="main">{children}</main>
         <Footer />
         <VerificationModal />
       </body>

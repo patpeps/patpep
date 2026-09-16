@@ -1,33 +1,62 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
 
-/** Wordmark + molecule glyph. Links home. */
-export default function Logo({ showTagline = true }: { showTagline?: boolean }) {
+/**
+ * Wordmark: a bonded-residue glyph in a hairline square, set against the
+ * display serif. `tone` matches the surface it sits on.
+ */
+export default function Logo({
+  tone = "ink",
+  showTagline = true,
+}: {
+  tone?: "ink" | "paper";
+  showTagline?: boolean;
+}) {
+  const onInk = tone === "ink";
+
   return (
-    <Link href="/" className="group flex items-center gap-2.5" aria-label={`${site.name} — home`}>
-      <span className="flex h-9 w-9 items-center justify-center rounded-md border border-accent/25 bg-accent-soft transition-colors group-hover:border-accent/50">
+    <Link
+      href="/"
+      aria-label={`${site.name} — home`}
+      className="group flex items-center gap-3"
+    >
+      <span
+        className={`flex h-10 w-10 items-center justify-center border transition-colors duration-300 ${
+          onInk
+            ? "border-rule-on-ink group-hover:border-acid"
+            : "border-rule-strong group-hover:border-acid-deep"
+        }`}
+      >
         <svg
           viewBox="0 0 24 24"
-          className="h-5 w-5 text-accent"
+          className={`h-5 w-5 transition-colors duration-300 ${
+            onInk ? "text-acid" : "text-acid-deep"
+          }`}
           fill="none"
           stroke="currentColor"
-          strokeWidth="1.5"
+          strokeWidth="1.25"
           strokeLinecap="round"
           aria-hidden="true"
         >
-          <circle cx="6" cy="7" r="2" />
-          <circle cx="18" cy="7" r="2" />
-          <circle cx="12" cy="17" r="2" />
-          <path d="M7.7 8.5 10.7 15.2M16.3 8.5 13.3 15.2M8 7h8" />
+          <path d="M5.5 8.5 12 16l6.5-7.5" />
+          <circle cx="5.5" cy="8.5" r="1.9" />
+          <circle cx="18.5" cy="8.5" r="1.9" />
+          <circle cx="12" cy="16" r="1.9" />
         </svg>
       </span>
-      <span className="leading-tight">
-        <span className="block text-sm font-semibold tracking-tight text-foreground">
+      <span className="leading-none">
+        <span
+          className={`display block text-[1.35rem] ${onInk ? "text-on-ink" : "text-text"}`}
+        >
           {site.name}
         </span>
         {showTagline && (
-          <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-muted">
-            {site.tagline}
+          <span
+            className={`label mt-1.5 block text-[0.6rem] ${
+              onInk ? "text-on-ink-muted" : "text-muted"
+            }`}
+          >
+            {site.location}
           </span>
         )}
       </span>

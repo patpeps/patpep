@@ -2,7 +2,8 @@
 
 Informational website for Patterson Peptides, a Patterson, California based research company.
 
-Built with Next.js (App Router), React, TypeScript, Tailwind CSS v4, and lucide-react.
+Built with Next.js (App Router), React, TypeScript, Tailwind CSS v4, and lucide-react (used
+sparingly — most visual marks in this design are typographic).
 
 **This site is informational only.** There is no cart, checkout, payment processing, or order
 submission anywhere in the codebase, and none should be added without also revisiting the legal
@@ -23,6 +24,41 @@ Open http://localhost:3000.
 | `npm run build` | Production build |
 | `npm run start` | Serve the production build |
 | `npm run lint` | ESLint |
+
+## Design system
+
+The site deliberately avoids the default "AI landing page" look (system/Inter fonts, purple-on-white
+gradients, flat fills). Everything below is defined once in [`app/globals.css`](app/globals.css).
+
+**Typography** — three faces loaded via `next/font`:
+
+| Role | Face | Used for |
+| --- | --- | --- |
+| Display | Instrument Serif | Headlines, product names, nav on mobile (`.display`) |
+| Body | IBM Plex Sans (300-600) | Paragraphs, lede copy (`.lede`) |
+| Mono | IBM Plex Mono | Eyebrows, labels, badges, figures (`.label`) |
+
+Sizes jump hard rather than gently: mono labels at ~0.58rem sit directly beside display type at
+3–6rem.
+
+**Palette** — bone paper, ink slabs, one acid accent:
+
+| Token | Value | Notes |
+| --- | --- | --- |
+| `--paper` / `--paper-2` / `--paper-3` | bone | Page, panels, insets |
+| `--ink` / `--ink-2` / `--ink-3` | near-black | Header, hero, footer, modal |
+| `--acid` | chartreuse | Accent. Only on dark surfaces or carrying dark text |
+| `--acid-deep` | olive | The accent when it must be small text on paper |
+| `--oxide` / `--oxide-deep` | rust | Pending status, notices |
+
+Every text/background pair used on the site clears WCAG AA (verified: 5.6:1 to 16.5:1).
+
+**Texture** — `.graph-paper`, `.console-grid`, `.halo`, `.halo-paper`, `.grain`, `.trace-rule`
+layer grids and light pools instead of flat backgrounds.
+
+**Motion** — CSS only. `.reveal`, `.wipe`, and `.rule-draw` accept a `--d` delay so a page load
+staggers; `.link-sweep` and card hovers handle micro-interaction; `.live-dot` marks live status.
+All of it collapses under `prefers-reduced-motion`.
 
 ## Editing the catalog
 
@@ -48,7 +84,7 @@ Other things you may want to change:
 | --- | --- |
 | Company name, location, Instagram handle, domain | [`lib/site.ts`](lib/site.ts) |
 | Navigation or footer links | `navItems` / `footerLinks` in `lib/site.ts` |
-| Colors, fonts, animations | [`app/globals.css`](app/globals.css) |
+| Colors, fonts, textures, animations | [`app/globals.css`](app/globals.css) (see Design system above) |
 | Disclaimer / Terms / Privacy wording | `SECTIONS` in the matching `app/*/page.tsx` |
 | Verification modal copy | [`components/VerificationModal.tsx`](components/VerificationModal.tsx) |
 | Favicon / touch icon / link preview | `app/icon.svg`, `app/apple-icon.png`, `app/opengraph-image.tsx`, `public/favicon.ico` |
@@ -66,7 +102,7 @@ app/
   robots.ts sitemap.ts opengraph-image.tsx icon.svg apple-icon.png
 components/
   Navbar  Footer  VerificationModal  ResetVerification
-  ProductCard  StatusBadge  DisclaimerBanner  LegalPage  Logo  InstagramIcon
+  PageHeader  ProductCard  StatusBadge  DisclaimerBanner  LegalPage  Logo  InstagramIcon
 data/
   products.ts         THE catalog file — edit this one
 lib/

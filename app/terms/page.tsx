@@ -130,7 +130,13 @@ export default function TermsPage() {
   return (
     <LegalPage
       eyebrow="Legal"
-      title="Terms & Conditions"
+      title={
+        <>
+          Terms &amp;
+          <br />
+          Conditions
+        </>
+      }
       updated="September 16, 2026"
       intro="These terms govern your use of this informational website. They are written in plain language and are intended to be read alongside the disclaimer and privacy policy."
       sections={SECTIONS}
