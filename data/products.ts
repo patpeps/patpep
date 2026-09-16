@@ -71,8 +71,8 @@ export const DEFAULT_DISCLAIMER =
 export const products: Product[] = [
   {
     id: "reta",
-    name: "RETA",
-    subtitle: "Research peptide",
+    name: "Retatrutide",
+    subtitle: "RETA",
     category: "peptides",
     description:
       "Lyophilized research peptide supplied for in vitro and laboratory research applications by qualified researchers.",
