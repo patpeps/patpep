@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- *  PATTERSON PEPTIDES — CENTRAL CATALOG FILE
+ *  PATTERSON PEPTIDES: CENTRAL CATALOG FILE
  * ============================================================================
  *
  *  This is the ONLY file you need to edit to change the research catalog.
@@ -26,7 +26,7 @@
 /** Availability shown on the card. Drives the StatusBadge everywhere. */
 export type ProductStatus = "available" | "pending" | "unavailable";
 
-/** Category id — must match one of the ids in `categories` below. */
+/** Category id. Must match one of the ids in `categories` below. */
 export type CategoryId = "peptides" | "supplies";
 
 export interface Product {
@@ -38,13 +38,13 @@ export interface Product {
   subtitle?: string;
   /** Category id from `categories` below. */
   category: CategoryId;
-  /** Research-use description. Keep it factual — no health or medical claims. */
+  /** Research-use description. Keep it factual, with no health or medical claims. */
   description: string;
   /** Amount / concentration, e.g. "10 mg" or "3 mL". Use null to omit. */
   amount: string | null;
   /**
    * Display price as a string, e.g. "$50". Use null to omit pricing entirely.
-   * Reference only — the site does not process payments or orders.
+   * Reference only. The site does not process payments or orders.
    */
   price: string | null;
   /** "available" | "pending" | "unavailable" */
@@ -65,7 +65,7 @@ export const DEFAULT_DISCLAIMER =
   "For laboratory research use only. Not for human or veterinary use, and not for use in diagnostic procedures.";
 
 /* ==========================================================================
- *  THE CATALOG — edit below this line
+ *  THE CATALOG: edit below this line
  * ========================================================================== */
 
 export const products: Product[] = [
@@ -89,7 +89,7 @@ export const products: Product[] = [
     subtitle: "Copper tripeptide-1",
     category: "peptides",
     description:
-      "A copper-binding tripeptide, lyophilized. We are not carrying this one yet — it is listed here so you know it is coming.",
+      "A copper-binding tripeptide, lyophilized. We are not carrying this one yet. It is listed here so you know it is coming.",
     amount: "50 mg",
     price: null,
     status: "pending",
@@ -114,7 +114,7 @@ export const products: Product[] = [
 ];
 
 /* ==========================================================================
- *  CATEGORIES — add or rename groups here, then use the id on a product
+ *  CATEGORIES: add or rename groups here, then use the id on a product
  * ========================================================================== */
 
 export interface Category {
@@ -137,7 +137,7 @@ export const categories: Category[] = [
 ];
 
 /* ==========================================================================
- *  HELPERS — used by the components. You normally won't need to edit these.
+ *  HELPERS: used by the components. You normally won't need to edit these.
  * ========================================================================== */
 
 /** Every product marked `visible: true`, in catalog order. */

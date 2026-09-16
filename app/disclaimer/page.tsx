@@ -79,7 +79,7 @@ const SECTIONS: LegalSection[] = [
     id: "product-information",
     title: "Product information",
     body: [
-      "Catalog information on this website — including names, descriptions, amounts, availability, and any reference pricing — is provided for general information and may change without notice.",
+      "Catalog information on this website, including names, descriptions, amounts, availability, and any reference pricing, is provided for general information and may change without notice.",
       "We make no representation or warranty, express or implied, as to the purity, composition, stability, suitability, safety, efficacy, or regulatory status of any material described on this website.",
     ],
   },

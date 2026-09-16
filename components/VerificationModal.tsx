@@ -14,7 +14,7 @@ const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1
 
 const STATEMENTS = [
   "I am at least 21 years of age.",
-  "I confirm I am a qualified researcher purchasing for in vitro / laboratory research only — not for human or veterinary use.",
+  "I confirm I am a qualified researcher purchasing for in vitro / laboratory research only, not for human or veterinary use.",
 ];
 
 /**

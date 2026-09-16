@@ -109,7 +109,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Catalog index — driven entirely by data/products.ts */}
+            {/* Catalog index, driven entirely by data/products.ts */}
             <aside
               className="reveal self-end border border-rule-on-ink bg-ink-2/60 backdrop-blur-[2px]"
               style={{ "--d": "560ms" } as React.CSSProperties}

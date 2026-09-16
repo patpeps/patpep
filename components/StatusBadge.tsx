@@ -2,7 +2,7 @@ import type { ProductStatus } from "@/data/products";
 import { cn } from "@/lib/utils";
 
 /**
- * Availability chip. Status is never carried by colour alone — every chip
+ * Availability chip. Status is never carried by colour alone. Every chip
  * pairs its dot with a written label.
  *
  * The label and styling for every status live here, so changing `status` in

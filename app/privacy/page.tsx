@@ -28,7 +28,7 @@ const SECTIONS: LegalSection[] = [
     id: "contact-information",
     title: "Contact information",
     body: [
-      `If you choose to contact us — for example by messaging ${site.instagramHandle} on Instagram — we will see whatever information you send us, along with whatever your Instagram profile makes visible. We use that information only to respond to your inquiry.`,
+      `If you choose to contact us, for example by messaging ${site.instagramHandle} on Instagram, we will see whatever information you send us, along with whatever your Instagram profile makes visible. We use that information only to respond to your inquiry.`,
       "Messages sent through Instagram are handled on Instagram's platform and are subject to Instagram's own privacy practices, not this policy.",
     ],
   },
@@ -53,7 +53,7 @@ const SECTIONS: LegalSection[] = [
     title: "Third-party services",
     body: [
       "This website links to our Instagram profile. Following that link takes you to a third-party platform with its own terms and privacy policy, and we do not control what that platform collects.",
-      "The website loads a web font from Google Fonts at build time, and is served by a web host. A host will ordinarily process basic technical request data — such as IP address, browser type, and requested page — as part of delivering the site and keeping it secure.",
+      "The website loads a web font from Google Fonts at build time, and is served by a web host. A host will ordinarily process basic technical request data, such as IP address, browser type, and requested page, as part of delivering the site and keeping it secure.",
     ],
   },
   {

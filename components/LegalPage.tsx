@@ -12,7 +12,7 @@ export interface LegalSection {
 
 /**
  * Shared layout for Disclaimer / Terms / Privacy: editorial two-column with a
- * sticky index. Pass the content as `sections` — numbering and anchors are
+ * sticky index. Pass the content as `sections`; numbering and anchors are
  * generated automatically.
  */
 export default function LegalPage({

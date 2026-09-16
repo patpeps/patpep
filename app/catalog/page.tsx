@@ -9,7 +9,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Research Catalog",
   description:
-    "Catalog information for research materials supplied by Patterson Peptides for in vitro and laboratory research use. Informational only — no ordering.",
+    "Catalog information for research materials supplied by Patterson Peptides for in vitro and laboratory research use. Informational only, with no ordering.",
   alternates: { canonical: "/catalog" },
   openGraph: {
     title: `Research Catalog | ${site.name}`,

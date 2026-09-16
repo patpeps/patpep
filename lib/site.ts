@@ -22,17 +22,47 @@ export const site = {
 export interface NavItem {
   href: string;
   label: string;
+  /** One line on what the page is for. Shown in the menu. */
+  description?: string;
 }
 
-/** Main navigation — used by both the desktop navbar and the mobile menu. */
+/** Main navigation, used by both the desktop navbar and the mobile menu. */
 export const navItems: NavItem[] = [
-  { href: "/", label: "Home" },
-  { href: "/catalog", label: "Research Catalog" },
-  { href: "/about", label: "About" },
-  { href: "/disclaimer", label: "Disclaimer" },
-  { href: "/terms", label: "Terms" },
-  { href: "/privacy", label: "Privacy" },
-  { href: "/contact", label: "Contact" },
+  {
+    href: "/",
+    label: "Home",
+    description: "The short version of who we are and what we carry.",
+  },
+  {
+    href: "/catalog",
+    label: "Research Catalog",
+    description: "Everything we stock, with amounts, prices and what is in right now.",
+  },
+  {
+    href: "/about",
+    label: "About",
+    description: "Who runs this, where we are, and what we will not claim.",
+  },
+  {
+    href: "/disclaimer",
+    label: "Disclaimer",
+    description: "What these materials are for, and what they are not for.",
+  },
+  {
+    href: "/terms",
+    label: "Terms",
+    description: "The rules for using this site, in plain language.",
+  },
+  {
+    href: "/privacy",
+    label: "Privacy",
+    description: "What this site collects, which is close to nothing.",
+  },
+  {
+    href: "/contact",
+    label: "Contact",
+    description: "How to reach us. Instagram is the fastest way.",
+  },
 ];
 
 /** Links listed in the footer. */

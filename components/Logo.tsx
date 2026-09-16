@@ -17,7 +17,7 @@ export default function Logo({
   return (
     <Link
       href="/"
-      aria-label={`${site.name} — home`}
+      aria-label={`${site.name}, home`}
       className="group flex items-center gap-3"
     >
       <span

@@ -3,7 +3,7 @@
  *
  * The acknowledgement is stored in localStorage so the modal does not appear on
  * every page load. It is an informational age / research-use acknowledgement
- * only — it is not proof that a visitor is a qualified researcher.
+ * only. It is not proof that a visitor is a qualified researcher.
  *
  * To reset it while developing, either use the "Reset verification" control in
  * the footer (development builds only) or run this in the browser console:

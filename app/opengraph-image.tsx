@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { site } from "@/lib/site";
 
-export const alt = `${site.name} — research materials for qualified researchers`;
+export const alt = `${site.name}: research materials for qualified researchers`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -14,7 +14,7 @@ const MUTED = "#a39d8c";
  * Generated Open Graph card. Edit the copy here to change link previews.
  *
  * Note: the renderer requires an explicit `display` on any element with more
- * than one child, and does not support <br> — each line is its own element.
+ * than one child, and does not support <br>; each line is its own element.
  */
 export default function OpengraphImage() {
   return new ImageResponse(

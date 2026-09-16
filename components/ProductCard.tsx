@@ -5,7 +5,7 @@ import type { Product } from "@/data/products";
 import { cn } from "@/lib/utils";
 
 /**
- * Specimen record card. Every value comes from /data/products.ts — this site
+ * Specimen record card. Every value comes from /data/products.ts. This site
  * is informational, so there is no ordering, cart, or checkout anywhere.
  */
 export default function ProductCard({
@@ -68,7 +68,7 @@ export default function ProductCard({
                 muted ? "text-rule-strong" : "text-ink/85",
               )}
             >
-              {product.amount ?? "—"}
+              {product.amount ?? "TBC"}
             </span>
             <span
               aria-hidden="true"
@@ -94,11 +94,11 @@ export default function ProductCard({
         <dl className="mt-5 divide-y divide-rule border-y border-rule">
           <div className="flex items-baseline justify-between gap-4 py-2.5">
             <dt className="label text-[0.55rem] text-muted">Amount</dt>
-            <dd className="font-mono text-sm">{product.amount ?? "—"}</dd>
+            <dd className="font-mono text-sm">{product.amount ?? "TBC"}</dd>
           </div>
           <div className="flex items-baseline justify-between gap-4 py-2.5">
             <dt className="label text-[0.55rem] text-muted">Reference price</dt>
-            <dd className="font-mono text-sm">{product.price ?? "—"}</dd>
+            <dd className="font-mono text-sm">{product.price ?? "Ask us"}</dd>
           </div>
         </dl>
 
