@@ -1,6 +1,9 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
 
+// Generated at build time, so the route also works in a static export.
+export const dynamic = "force-static";
+
 /** Routes included in the sitemap. Add new pages here. */
 const ROUTES = ["", "/catalog", "/about", "/contact", "/disclaimer", "/terms", "/privacy"];
 

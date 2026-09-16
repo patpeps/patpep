@@ -5,6 +5,9 @@ export const alt = `${site.name}: research materials for qualified researchers`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Rendered at build time, so the route also works in a static export.
+export const dynamic = "force-static";
+
 const INK = "#14130f";
 const ACID = "#c9f24d";
 const PAPER = "#f0ece1";
