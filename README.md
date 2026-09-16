@@ -28,18 +28,19 @@ Open http://localhost:3000.
 ## Design system
 
 The site deliberately avoids the default "AI landing page" look (system/Inter fonts, purple-on-white
-gradients, flat fills). Everything below is defined once in [`app/globals.css`](app/globals.css).
+gradients, flat fills, no motion). Everything below is defined once in
+[`app/globals.css`](app/globals.css).
 
 **Typography** — three faces loaded via `next/font`:
 
 | Role | Face | Used for |
 | --- | --- | --- |
-| Display | Instrument Serif | Headlines, product names, nav on mobile (`.display`) |
-| Body | IBM Plex Sans (300-600) | Paragraphs, lede copy (`.lede`) |
-| Mono | IBM Plex Mono | Eyebrows, labels, badges, figures (`.label`) |
+| Display | Bricolage Grotesque | Headlines, product names, mobile nav (`.display` at weight 800, `.display-light` at 200) |
+| Body | Sora | Paragraphs and lede copy (`.lede`) |
+| Mono | JetBrains Mono | Eyebrows, labels, badges, figures (`.label`) |
 
-Sizes jump hard rather than gently: mono labels at ~0.58rem sit directly beside display type at
-3–6rem.
+Weight extremes carry the contrast: 800 against 200 in the same headline, mono labels at ~0.58rem
+next to display type at 3–6rem.
 
 **Palette** — bone paper, ink slabs, one acid accent:
 
@@ -53,12 +54,32 @@ Sizes jump hard rather than gently: mono labels at ~0.58rem sit directly beside 
 
 Every text/background pair used on the site clears WCAG AA (verified: 5.6:1 to 16.5:1).
 
-**Texture** — `.graph-paper`, `.console-grid`, `.halo`, `.halo-paper`, `.grain`, `.trace-rule`
-layer grids and light pools instead of flat backgrounds.
+**Texture** — `.graph-paper`, `.console-grid`, `.halo`, `.halo-paper` and `.trace-rule` layer grids
+and light pools instead of flat backgrounds.
 
-**Motion** — CSS only. `.reveal`, `.wipe`, and `.rule-draw` accept a `--d` delay so a page load
-staggers; `.link-sweep` and card hovers handle micro-interaction; `.live-dot` marks live status.
-All of it collapses under `prefers-reduced-motion`.
+## Motion
+
+All CSS, no animation library. Four layers:
+
+| Layer | How it works |
+| --- | --- |
+| **Page load** | `.reveal` / `.rule-draw` with a `--d` delay token stagger the hero in sequence |
+| **On scroll** | [`components/Reveal.tsx`](components/Reveal.tsx) flips `data-revealed`; CSS transitions `up` / `fade` / `left` / `scale`. `delay` staggers groups |
+| **On navigation** | [`components/PageTransition.tsx`](components/PageTransition.tsx) is keyed on the pathname, so every route change replays a fade-up plus an accent bar sweeping the top of the viewport |
+| **Ambient** | `.console-grid-drift` (grids drift), `.halo-breathe` (light pools breathe), `.live-dot` (status pulse), `.marquee-track` (notice ticker, pauses on hover), `.trace-path` + `.scan-line` (hero chromatogram draws itself, then a scan line sweeps it) |
+
+Click and hover feedback is standardised in three utilities: `.press` (lift on hover, push down on
+click), `.press-card` (lift plus shadow, settle on press), and `.row-slide` (list rows indent with
+an accent edge). `.arrow-shift` advances an arrow inside any `.group`, and `.link-sweep` draws an
+underline in from the left. Legal pages carry a scroll-progress bar where `animation-timeline` is
+supported.
+
+Two accessibility notes, both deliberate:
+
+- Under `prefers-reduced-motion: reduce` everything collapses to a static page — reveals are forced
+  visible, the ticker stops and centres, and hover/press transforms are removed.
+- Scroll reveals start hidden only inside `@media (scripting: enabled)`, and `Reveal` fails open
+  (an unmeasurable viewport reveals immediately), so content can never get stuck invisible.
 
 ## Editing the catalog
 
@@ -84,7 +105,7 @@ Other things you may want to change:
 | --- | --- |
 | Company name, location, Instagram handle, domain | [`lib/site.ts`](lib/site.ts) |
 | Navigation or footer links | `navItems` / `footerLinks` in `lib/site.ts` |
-| Colors, fonts, textures, animations | [`app/globals.css`](app/globals.css) (see Design system above) |
+| Colors, fonts, textures, animations | [`app/globals.css`](app/globals.css) (see Design system and Motion above) |
 | Disclaimer / Terms / Privacy wording | `SECTIONS` in the matching `app/*/page.tsx` |
 | Verification modal copy | [`components/VerificationModal.tsx`](components/VerificationModal.tsx) |
 | Favicon / touch icon / link preview | `app/icon.svg`, `app/apple-icon.png`, `app/opengraph-image.tsx`, `public/favicon.ico` |
@@ -102,6 +123,7 @@ app/
   robots.ts sitemap.ts opengraph-image.tsx icon.svg apple-icon.png
 components/
   Navbar  Footer  VerificationModal  ResetVerification
+  PageTransition  Reveal  CountUp  Marquee  HeroTrace
   PageHeader  ProductCard  StatusBadge  DisclaimerBanner  LegalPage  Logo  InstagramIcon
 data/
   products.ts         THE catalog file — edit this one

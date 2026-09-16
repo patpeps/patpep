@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import DisclaimerBanner from "@/components/DisclaimerBanner";
 import ProductCard from "@/components/ProductCard";
 import PageHeader from "@/components/PageHeader";
+import Reveal from "@/components/Reveal";
 import { getActiveCategories, getProductsByCategory, getVisibleProducts } from "@/data/products";
 import { site } from "@/lib/site";
 
@@ -47,7 +48,9 @@ export default function CatalogPage() {
       />
 
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
-        <DisclaimerBanner className="max-w-3xl" />
+        <Reveal>
+          <DisclaimerBanner className="max-w-3xl" />
+        </Reveal>
 
         {activeCategories.length === 0 ? (
           <p className="mt-16 border border-dashed border-rule-strong p-16 text-center text-sm text-muted">
@@ -59,7 +62,7 @@ export default function CatalogPage() {
               const items = getProductsByCategory(category.id);
               return (
                 <section key={category.id} aria-labelledby={`category-${category.id}`}>
-                  <div className="flex flex-wrap items-end justify-between gap-4 border-b border-rule pb-5">
+                  <Reveal className="flex flex-wrap items-end justify-between gap-4 border-b border-rule pb-5">
                     <div>
                       <h2 id={`category-${category.id}`} className="display text-4xl leading-none sm:text-5xl">
                         {category.label}
@@ -70,7 +73,7 @@ export default function CatalogPage() {
                       {String(items.length).padStart(2, "0")}{" "}
                       {items.length === 1 ? "listing" : "listings"}
                     </p>
-                  </div>
+                  </Reveal>
 
                   <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {items.map((product, index) => (
@@ -89,7 +92,7 @@ export default function CatalogPage() {
         )}
 
         {/* Availability key */}
-        <section className="mt-20 border border-rule bg-paper-2">
+        <Reveal as="section" className="mt-20 border border-rule bg-paper-2">
           <h2 className="label border-b border-rule px-6 py-4 text-[0.58rem] text-muted">
             Availability key
           </h2>
@@ -109,7 +112,7 @@ export default function CatalogPage() {
               </div>
             ))}
           </dl>
-        </section>
+        </Reveal>
       </div>
     </>
   );

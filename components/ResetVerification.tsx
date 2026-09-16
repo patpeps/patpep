@@ -16,7 +16,7 @@ export default function ResetVerification() {
     <button
       type="button"
       onClick={clearVerified}
-      className="label border border-dashed border-rule-on-ink px-3 py-2 text-[0.55rem] text-on-ink-muted transition-colors duration-200 hover:border-acid hover:text-acid"
+      className="label press border border-dashed border-rule-on-ink px-3 py-2 text-[0.55rem] text-on-ink-muted hover:border-acid hover:text-acid"
     >
       Reset verification (dev only)
     </button>

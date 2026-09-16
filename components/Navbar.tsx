@@ -4,8 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Logo from "@/components/Logo";
+import Marquee from "@/components/Marquee";
 import { navItems, RESEARCH_USE_NOTICE, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
+
+const TICKER = [
+  "Research use only",
+  RESEARCH_USE_NOTICE,
+  "Not for use in diagnostic procedures",
+  site.location,
+  "In vitro / laboratory research",
+];
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -19,14 +28,10 @@ export default function Navbar() {
 
   return (
     <header className="on-ink sticky top-0 z-40 bg-ink text-on-ink">
-      {/* Standing notice strip */}
-      <div className="border-b border-rule-on-ink/70">
-        <div className="mx-auto flex max-w-6xl items-center justify-center gap-3 px-4 py-2 sm:px-6">
-          <span className="live-dot h-1.5 w-1.5 shrink-0 bg-acid" aria-hidden="true" />
-          <p className="label text-center text-[0.58rem] text-on-ink-muted sm:text-[0.62rem]">
-            Research use only &nbsp;&middot;&nbsp; {RESEARCH_USE_NOTICE}
-          </p>
-        </div>
+      {/* Standing notice ticker */}
+      <div className="flex items-center gap-4 border-b border-rule-on-ink/70 px-4 py-2 sm:px-6">
+        <span className="live-dot h-1.5 w-1.5 shrink-0 bg-acid" aria-hidden="true" />
+        <Marquee items={TICKER} />
       </div>
 
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
@@ -42,15 +47,17 @@ export default function Navbar() {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "label relative py-1 text-[0.63rem] transition-colors duration-200",
+                      "label press group relative block py-1 text-[0.63rem]",
                       active ? "text-acid" : "text-on-ink-muted hover:text-on-ink",
                     )}
                   >
                     {item.label}
                     <span
                       className={cn(
-                        "absolute -bottom-1 left-0 h-px w-full origin-left bg-acid transition-transform duration-300",
-                        active ? "scale-x-100" : "scale-x-0",
+                        "absolute -bottom-1 left-0 h-px w-full bg-acid transition-transform duration-300",
+                        active
+                          ? "origin-left scale-x-100"
+                          : "origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100 group-focus-visible:origin-left group-focus-visible:scale-x-100",
                       )}
                       aria-hidden="true"
                     />
@@ -67,25 +74,25 @@ export default function Navbar() {
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
-          className="flex h-10 w-10 items-center justify-center border border-rule-on-ink transition-colors duration-200 hover:border-acid lg:hidden"
+          className="press flex h-10 w-10 items-center justify-center border border-rule-on-ink hover:border-acid lg:hidden"
         >
           <span className="relative block h-3 w-4" aria-hidden="true">
             <span
               className={cn(
-                "absolute left-0 block h-px w-4 bg-current transition-transform duration-300",
-                open ? "top-1.5 rotate-45" : "top-0",
+                "absolute left-0 block h-px w-4 bg-current transition-all duration-300",
+                open ? "top-1.5 rotate-45 bg-acid" : "top-0",
               )}
             />
             <span
               className={cn(
-                "absolute left-0 top-1.5 block h-px w-4 bg-current transition-opacity duration-200",
-                open ? "opacity-0" : "opacity-100",
+                "absolute left-0 top-1.5 block h-px bg-current transition-all duration-200",
+                open ? "w-0 opacity-0" : "w-4 opacity-100",
               )}
             />
             <span
               className={cn(
-                "absolute left-0 block h-px w-4 bg-current transition-transform duration-300",
-                open ? "top-1.5 -rotate-45" : "top-3",
+                "absolute left-0 block h-px w-4 bg-current transition-all duration-300",
+                open ? "top-1.5 -rotate-45 bg-acid" : "top-3",
               )}
             />
           </span>
@@ -105,16 +112,16 @@ export default function Navbar() {
                 <li
                   key={item.href}
                   className="reveal border-b border-rule-on-ink/40 last:border-0"
-                  style={{ "--d": `${index * 35}ms` } as React.CSSProperties}
+                  style={{ "--d": `${index * 45}ms` } as React.CSSProperties}
                 >
                   <Link
                     href={item.href}
                     aria-current={active ? "page" : undefined}
-                    className="flex items-baseline justify-between py-4"
+                    className="row-slide -mx-2 flex items-baseline justify-between px-2 py-4"
                   >
                     <span
                       className={cn(
-                        "display text-2xl",
+                        "display text-[1.75rem]",
                         active ? "text-acid" : "text-on-ink",
                       )}
                     >

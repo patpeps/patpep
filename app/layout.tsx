@@ -1,32 +1,33 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, IBM_Plex_Sans, Instrument_Serif } from "next/font/google";
+import { Bricolage_Grotesque, JetBrains_Mono, Sora } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import PageTransition from "@/components/PageTransition";
 import VerificationModal from "@/components/VerificationModal";
 import { site } from "@/lib/site";
 
 /**
- * Type system: a high-contrast display serif against a technical sans/mono
- * pair. Deliberately not a default UI font.
+ * Type system: a variable display grotesque with real weight extremes,
+ * a geometric body sans, and a technical mono for labels and figures.
+ * Deliberately not a default UI font.
  */
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
+  weight: ["200", "400", "600", "800"],
   display: "swap",
 });
 
-const plexSans = IBM_Plex_Sans({
-  variable: "--font-plex-sans",
+const sora = Sora({
+  variable: "--font-body",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["200", "300", "400", "500"],
   display: "swap",
 });
 
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
+const jetbrains = JetBrains_Mono({
+  variable: "--font-mono-tech",
   subsets: ["latin"],
   weight: ["400", "500"],
   display: "swap",
@@ -67,14 +68,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${instrumentSerif.variable} ${plexSans.variable} ${plexMono.variable} antialiased`}
-      >
+      <body className={`${bricolage.variable} ${sora.variable} ${jetbrains.variable} antialiased`}>
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
         <Navbar />
-        <main id="main">{children}</main>
+        <main id="main">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <Footer />
         <VerificationModal />
       </body>

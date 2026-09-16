@@ -6,8 +6,8 @@ import { footerLinks, RESEARCH_USE_NOTICE, site } from "@/lib/site";
 export default function Footer() {
   return (
     <footer className="on-ink relative mt-24 overflow-hidden bg-ink text-on-ink">
-      <div className="console-grid absolute inset-0 opacity-70" aria-hidden="true" />
-      <div className="halo absolute inset-0 opacity-60" aria-hidden="true" />
+      <div className="console-grid console-grid-drift absolute inset-0 opacity-70" aria-hidden="true" />
+      <div className="halo halo-breathe absolute inset-0 opacity-60" aria-hidden="true" />
 
       <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div className="grid gap-12 md:grid-cols-[1.6fr_1fr_1fr]">
@@ -46,7 +46,7 @@ export default function Footer() {
               href={site.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group mt-5 flex items-center gap-3 border border-rule-on-ink px-4 py-3 transition-colors duration-300 hover:border-acid"
+              className="press group mt-5 flex items-center gap-3 border border-rule-on-ink px-4 py-3 hover:border-acid"
             >
               <InstagramIcon className="h-4 w-4 text-acid" />
               <span className="font-mono text-sm text-on-ink transition-colors group-hover:text-acid">

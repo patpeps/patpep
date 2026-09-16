@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import DisclaimerBanner from "@/components/DisclaimerBanner";
 import PageHeader from "@/components/PageHeader";
+import Reveal from "@/components/Reveal";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -43,7 +44,7 @@ export default function AboutPage() {
             <br />
             company in
             <br />
-            <em className="italic">Patterson.</em>
+            <span className="display-light">Patterson.</span>
           </>
         }
         meta={[
@@ -54,7 +55,7 @@ export default function AboutPage() {
 
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
         <div className="grid gap-14 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="max-w-2xl">
+          <Reveal motion="left" className="max-w-2xl">
             <p className="lede">
               {site.name} is a research company based in {site.location}. We focus on providing
               research materials to qualified researchers and laboratories for in vitro and
@@ -83,32 +84,29 @@ export default function AboutPage() {
             <div className="mt-10 flex flex-wrap gap-3">
               <Link
                 href="/catalog"
-                className="group flex items-center gap-4 bg-ink px-6 py-4 text-on-ink transition-colors duration-200 hover:bg-acid hover:text-ink"
+                className="press group flex items-center gap-4 bg-ink px-6 py-4 text-on-ink hover:bg-acid hover:text-ink"
               >
                 <span className="label text-[0.65rem]">View research catalog</span>
-                <span
-                  aria-hidden="true"
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                >
+                <span className="arrow-shift" aria-hidden="true">
                   &rarr;
                 </span>
               </Link>
               <Link
                 href="/contact"
-                className="label border border-rule-strong px-6 py-4 text-[0.65rem] transition-colors duration-200 hover:border-ink"
+                className="label press border border-rule-strong px-6 py-4 text-[0.65rem] hover:border-ink"
               >
                 Contact
               </Link>
             </div>
-          </div>
+          </Reveal>
 
-          <aside className="border border-rule bg-paper-2">
+          <Reveal as="aside" delay={140} className="border border-rule bg-paper-2">
             <h2 className="label border-b border-rule px-6 py-4 text-[0.55rem] text-muted">
               At a glance
             </h2>
             <dl className="divide-y divide-rule">
               {POINTS.map((point, index) => (
-                <div key={point.title} className="px-6 py-6">
+                <div key={point.title} className="row-slide px-6 py-6">
                   <dt className="flex items-baseline gap-3">
                     <span className="label text-[0.52rem] text-muted">
                       {String(index + 1).padStart(2, "0")}
@@ -119,7 +117,7 @@ export default function AboutPage() {
                 </div>
               ))}
             </dl>
-          </aside>
+          </Reveal>
         </div>
       </div>
     </>

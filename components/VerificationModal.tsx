@@ -82,8 +82,8 @@ export default function VerificationModal() {
         aria-describedby="verification-description"
         className="on-ink reveal relative my-auto w-full max-w-xl overflow-hidden border border-rule-on-ink bg-ink text-on-ink"
       >
-        <div className="console-grid absolute inset-0 opacity-70" aria-hidden="true" />
-        <div className="halo absolute inset-0 opacity-70" aria-hidden="true" />
+        <div className="console-grid console-grid-drift absolute inset-0 opacity-70" aria-hidden="true" />
+        <div className="halo halo-breathe absolute inset-0 opacity-70" aria-hidden="true" />
 
         <div className="relative p-7 sm:p-10">
           <div className="flex items-center gap-3">
@@ -112,7 +112,7 @@ export default function VerificationModal() {
 
           <ul className="mt-7 divide-y divide-rule-on-ink border-y border-rule-on-ink">
             {STATEMENTS.map((statement, index) => (
-              <li key={statement} className="flex gap-4 py-4">
+              <li key={statement} className="row-slide flex gap-4 py-4">
                 <span className="label shrink-0 pt-0.5 text-[0.55rem] text-acid">
                   {String(index + 1).padStart(2, "0")}
                 </span>
@@ -125,13 +125,10 @@ export default function VerificationModal() {
             ref={confirmRef}
             type="button"
             onClick={setVerified}
-            className="group mt-7 flex w-full items-center justify-between gap-4 bg-acid px-5 py-4 text-ink transition-colors duration-200 hover:bg-on-ink"
+            className="press group mt-7 flex w-full items-center justify-between gap-4 bg-acid px-5 py-4 text-ink hover:bg-on-ink"
           >
             <span className="label text-[0.7rem]">Enter {site.name}</span>
-            <span
-              aria-hidden="true"
-              className="transition-transform duration-300 group-hover:translate-x-1"
-            >
+            <span className="arrow-shift" aria-hidden="true">
               &rarr;
             </span>
           </button>
