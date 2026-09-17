@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
 import StatusBadge from "@/components/StatusBadge";
+import StarRating from "@/components/reviews/StarRating";
 import type { Product } from "@/data/products";
 import { cn } from "@/lib/utils";
 
@@ -18,12 +19,15 @@ export default function ProductCard({
   index,
   delay = 0,
   reviewCount = 0,
+  rating = null,
   onOpen,
 }: {
   product: Product;
   index?: number;
   delay?: number;
   reviewCount?: number;
+  /** Average of published reviews, or null when there are none yet. */
+  rating?: number | null;
   onOpen?: () => void;
 }) {
   const muted = product.status !== "available";
@@ -99,7 +103,17 @@ export default function ProductCard({
           <p className="label mt-2.5 text-[0.58rem] text-muted">{product.subtitle}</p>
         )}
 
-        <StatusBadge status={product.status} className="mt-4 self-start" />
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <StatusBadge status={product.status} />
+          {rating !== null && reviewCount > 0 && (
+            <span className="flex items-center gap-2">
+              <StarRating value={rating} />
+              <span className="label text-[0.5rem] text-muted">
+                {rating.toFixed(1)} ({reviewCount})
+              </span>
+            </span>
+          )}
+        </div>
 
         <p className="mt-4 text-sm leading-relaxed text-muted">{product.description}</p>
 
@@ -117,8 +131,9 @@ export default function ProductCard({
         {onOpen ? (
           <p className="mt-5 flex items-center justify-between gap-3 border-t border-rule pt-4">
             <span className="label text-[0.55rem] text-acid-deep">
-              Details &amp; reviews
-              {reviewCount > 0 && ` (${reviewCount})`}
+              {reviewCount > 0
+                ? `Details and ${reviewCount} ${reviewCount === 1 ? "review" : "reviews"}`
+                : "Details and reviews"}
             </span>
             <span className="arrow-shift text-sm" aria-hidden="true">
               &rarr;

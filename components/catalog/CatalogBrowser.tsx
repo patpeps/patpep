@@ -6,7 +6,12 @@ import Reveal from "@/components/Reveal";
 import ProductModal from "@/components/catalog/ProductModal";
 import ReviewsSection from "@/components/reviews/ReviewsSection";
 import type { Category, Product } from "@/data/products";
-import { fetchPublishedReviews, groupByProduct, type Review } from "@/lib/reviews";
+import {
+  averageRating,
+  fetchPublishedReviews,
+  groupByProduct,
+  type Review,
+} from "@/lib/reviews";
 
 type Load = "loading" | "ready" | "error";
 
@@ -103,6 +108,7 @@ export default function CatalogBrowser({
                     index={products.indexOf(product)}
                     delay={index * 80}
                     reviewCount={byProduct[product.id]?.length ?? 0}
+                    rating={averageRating(byProduct[product.id] ?? [])}
                     onOpen={() => setOpenId(product.id)}
                   />
                 ))}

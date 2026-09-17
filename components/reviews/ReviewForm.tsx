@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import StarRatingInput from "@/components/reviews/StarRatingInput";
 import type { Product } from "@/data/products";
 import { REVIEW_LIMITS, submitReview } from "@/lib/reviews";
-import { cn } from "@/lib/utils";
 
 type State = "idle" | "sending" | "sent" | "error";
 
@@ -104,28 +104,7 @@ export default function ReviewForm({
         {/* Rating */}
         <fieldset>
           <legend className="label text-[0.55rem] text-muted">Rating</legend>
-          <div className="mt-2 flex flex-wrap items-center gap-2">
-            {[1, 2, 3, 4, 5].map((mark) => (
-              <button
-                key={mark}
-                type="button"
-                onClick={() => setRating(mark)}
-                aria-pressed={rating === mark}
-                aria-label={`${mark} out of 5`}
-                className={cn(
-                  "press h-10 w-10 border text-sm font-medium",
-                  rating >= mark
-                    ? "border-acid-deep bg-acid/30 text-text"
-                    : "border-rule bg-paper text-muted hover:border-rule-strong",
-                )}
-              >
-                {mark}
-              </button>
-            ))}
-            <span className="ml-1 text-xs text-muted">
-              {rating === 0 ? "Pick a rating" : `${rating} out of 5`}
-            </span>
-          </div>
+          <StarRatingInput value={rating} onChange={setRating} />
         </fieldset>
 
         {/* Name */}
