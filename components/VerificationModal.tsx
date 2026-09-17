@@ -71,7 +71,7 @@ export default function VerificationModal() {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-ink/85 p-4 backdrop-blur-[3px]"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/85 p-4 backdrop-blur-[3px] sm:p-6"
       role="presentation"
     >
       <div
@@ -80,12 +80,14 @@ export default function VerificationModal() {
         aria-modal="true"
         aria-labelledby="verification-title"
         aria-describedby="verification-description"
-        className="on-ink reveal relative my-auto w-full max-w-xl overflow-hidden border border-rule-on-ink bg-ink text-on-ink"
+        className="on-ink reveal relative flex max-h-full w-full max-w-xl flex-col overflow-hidden border border-rule-on-ink bg-ink text-on-ink"
       >
         <div className="console-grid console-grid-drift absolute inset-0 opacity-70" aria-hidden="true" />
         <div className="halo halo-breathe absolute inset-0 opacity-70" aria-hidden="true" />
 
-        <div className="relative p-7 sm:p-10">
+        {/* The panel is capped to the viewport and this column scrolls, so the
+            gate stays centred on a short screen instead of running off it. */}
+        <div className="relative min-h-0 flex-1 overflow-y-auto p-7 sm:p-10">
           <div className="flex items-center gap-3">
             <span className="live-dot h-1.5 w-1.5 bg-acid" aria-hidden="true" />
             <p className="label text-[0.58rem] text-acid">Gate 01</p>

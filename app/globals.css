@@ -402,8 +402,13 @@ body {
  *  Route transition — plays on every in-app navigation
  * ----------------------------------------------------------------------- */
 
+/* Fill mode is "backwards", not "both", on purpose: "both" leaves an identity
+ * transform on the element after the animation ends, and any transform makes
+ * it the containing block for position:fixed children, which drags modals out
+ * of the viewport. "backwards" still prevents a flash before the animation
+ * starts, then hands the element back its normal, transform-free style. */
 .page-enter {
-  animation: page-in 0.55s var(--ease-out-expo) both;
+  animation: page-in 0.55s var(--ease-out-expo) backwards;
 }
 
 .route-sweep {

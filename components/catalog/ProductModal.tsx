@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import StatusBadge from "@/components/StatusBadge";
 import StarRating from "@/components/reviews/StarRating";
 import type { Product } from "@/data/products";
@@ -70,9 +71,17 @@ export default function ProductModal({
   const average = averageRating(reviews);
   const recent = reviews.slice(0, 2);
 
-  return (
+  // Only ever rendered after a click, so there is no server pass to guard
+  // against beyond this check.
+  if (typeof document === "undefined") return null;
+
+  // Portalled to the body so no transformed ancestor can reposition it.
+  // A transform anywhere up the tree turns that element into the containing
+  // block for fixed children, which is exactly how this modal once ended up
+  // measured against the full height of the page instead of the viewport.
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-ink/85 p-4 backdrop-blur-[3px]"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/85 p-4 backdrop-blur-[3px] sm:p-6"
       role="presentation"
     >
       {/* Click-outside target */}
@@ -89,12 +98,12 @@ export default function ProductModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="product-modal-title"
-        className="on-ink reveal relative my-auto w-full max-w-2xl overflow-hidden border border-rule-on-ink bg-ink text-on-ink"
+        className="on-ink reveal relative flex max-h-full w-full max-w-2xl flex-col overflow-hidden border border-rule-on-ink bg-ink text-on-ink"
       >
         <div className="console-grid console-grid-drift absolute inset-0 opacity-70" aria-hidden="true" />
         <div className="halo halo-breathe absolute inset-0 opacity-70" aria-hidden="true" />
 
-        <div className="relative max-h-[85vh] overflow-y-auto p-7 sm:p-10">
+        <div className="relative min-h-0 flex-1 overflow-y-auto p-7 sm:p-10">
           {/* Header */}
           <div className="flex items-start justify-between gap-6">
             <div className="min-w-0">
@@ -244,6 +253,7 @@ export default function ProductModal({
           </p>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
