@@ -57,6 +57,62 @@ Every text/background pair used on the site clears WCAG AA (verified: 5.6:1 to 1
 **Texture** — `.graph-paper`, `.console-grid`, `.halo`, `.halo-paper` and `.trace-rule` layer grids
 and light pools instead of flat backgrounds.
 
+## Reviews
+
+Visitors can write reviews from the bottom of the Research Catalog page. They
+are stored in Firestore and read back by the browser, so the site stays static
+with no server of its own.
+
+**Nothing on that page is invented.** There are no seeded, sample or example
+reviews anywhere in this repo. The section is empty until real people write
+something, and it says so.
+
+### Publishing a review
+
+Every submission is saved with `status: "pending"` and is invisible on the site
+until you publish it by hand:
+
+1. Open the [Firestore data
+   browser](https://console.firebase.google.com/project/peps-eafbc/firestore/data/~2Freviews)
+2. Open the `reviews` collection. New submissions sit there as `pending`
+3. To publish one, change its `status` field to `published`. It appears on the
+   site immediately
+4. To reject one, delete the document
+
+Two reasons it works this way rather than posting instantly. Spam bots do find
+open databases, and you do not want them writing on your catalog page. More
+importantly, a review describing human or veterinary use would directly
+contradict the research-use-only position the rest of the site takes, and you
+want the chance to catch that before it is public. The form tells reviewers this
+up front.
+
+### What the rules allow
+
+[`firestore.rules`](firestore.rules) is what keeps this safe, since the API key
+in the client is public by design:
+
+| Action | Who |
+| --- | --- |
+| Read a review | Anyone, but only ones already marked `published` |
+| Create a review | Anyone, only in the exact shape allowed, only as `pending` |
+| Edit a review | Nobody. Not from a browser, at any time |
+| Delete a review | Nobody. Only you, in the console |
+
+Submissions are also size-checked (rating 1-5, body 10-1500 characters, name up
+to 60) and timestamp-checked, and the form carries a honeypot field that quietly
+swallows bot submissions.
+
+Deploy rule changes with:
+
+```bash
+firebase deploy --only firestore
+```
+
+### Cost
+
+Firestore's free tier covers 50,000 reads and 20,000 writes a day. The catalog
+page makes one read per visit, so this stays free.
+
 ## Motion
 
 All CSS, no animation library. Four layers:

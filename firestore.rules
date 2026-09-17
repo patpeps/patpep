@@ -1,0 +1,67 @@
+rules_version = '2';
+
+// Reviews are the only thing in this database, and these rules are what keep
+// it safe while the site is static HTML with no server of its own.
+//
+//   read    only reviews already marked "published"
+//   create  anyone, but only in the exact shape below, and only as "pending"
+//   update  nobody
+//   delete  nobody
+//
+// So a visitor can submit a review and nothing else. Publishing means changing
+// status to "published" in the Firebase console, which the rules cannot be
+// used to do from a browser.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /reviews/{reviewId} {
+
+      allow read: if resource.data.status == "published";
+
+      allow create: if isWellFormedReview();
+
+      allow update, delete: if false;
+
+      function isWellFormedReview() {
+        let review = request.resource.data;
+
+        return review.keys().hasOnly(
+                 ["productId", "rating", "name", "body", "status", "createdAt"]
+               )
+               && review.keys().hasAll(
+                 ["productId", "rating", "name", "body", "status", "createdAt"]
+               )
+
+               // Never published straight from the browser.
+               && review.status == "pending"
+
+               && review.productId is string
+               && review.productId.size() > 0
+               && review.productId.size() <= 64
+
+               && review.rating is int
+               && review.rating >= 1
+               && review.rating <= 5
+
+               // A name is optional, so an empty string is allowed.
+               && review.name is string
+               && review.name.size() <= 60
+
+               && review.body is string
+               && review.body.size() >= 10
+               && review.body.size() <= 1500
+
+               // Stops a forged date being used to jump the ordering.
+               && review.createdAt is timestamp
+               && review.createdAt >= request.time - duration.value(10, 'm')
+               && review.createdAt <= request.time + duration.value(10, 'm');
+      }
+    }
+
+    // Nothing else in this project is reachable from a browser.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

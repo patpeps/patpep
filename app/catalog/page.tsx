@@ -3,6 +3,7 @@ import DisclaimerBanner from "@/components/DisclaimerBanner";
 import ProductCard from "@/components/ProductCard";
 import PageHeader from "@/components/PageHeader";
 import Reveal from "@/components/Reveal";
+import ReviewsSection from "@/components/reviews/ReviewsSection";
 import { getActiveCategories, getProductsByCategory, getVisibleProducts } from "@/data/products";
 import { site } from "@/lib/site";
 
@@ -113,6 +114,8 @@ export default function CatalogPage() {
             ))}
           </dl>
         </Reveal>
+
+        <ReviewsSection products={all} />
       </div>
     </>
   );
