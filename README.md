@@ -149,7 +149,15 @@ Two accessibility notes, both deliberate:
 | Remove pricing from a card | `price: null` |
 | Add a photo | Put the file in `/public`, set `image: "/file.jpg"` |
 | Change the per-product disclaimer | `disclaimer:` (or `DEFAULT_DISCLAIMER` for all of them) |
+| Change what the detail popup says | `details:` (what the material is), `researchUse:` (list of assays), `handling:` (storage) |
 | Add or rename a category | `categories` at the bottom of the same file |
+
+Clicking a listing on the catalog page opens a popup built from `details`,
+`researchUse` and `handling`. All three are optional: leave one out and the
+popup omits that block. Keep them factual, describing what the material **is**
+and what labs study it **for**. Do not describe an effect on a person or an
+animal: that would be a therapeutic claim, and it contradicts the
+research-use-only position every other page takes.
 
 Changing `status` updates the badge, the home-page counts, and the catalog automatically — no
 component edits required. Setting `visible: false` removes the product everywhere, and a category

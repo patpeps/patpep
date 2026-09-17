@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import DisclaimerBanner from "@/components/DisclaimerBanner";
-import ProductCard from "@/components/ProductCard";
 import PageHeader from "@/components/PageHeader";
 import Reveal from "@/components/Reveal";
-import ReviewsSection from "@/components/reviews/ReviewsSection";
-import { getActiveCategories, getProductsByCategory, getVisibleProducts } from "@/data/products";
+import CatalogBrowser from "@/components/catalog/CatalogBrowser";
+import { getActiveCategories, getVisibleProducts } from "@/data/products";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -53,43 +52,16 @@ export default function CatalogPage() {
           <DisclaimerBanner className="max-w-3xl" />
         </Reveal>
 
-        {activeCategories.length === 0 ? (
-          <p className="mt-16 border border-dashed border-rule-strong p-16 text-center text-sm text-muted">
+        <p className="label mt-10 text-[0.55rem] text-muted">
+          Click any listing for the full description and its reviews
+        </p>
+
+        {all.length === 0 ? (
+          <p className="mt-6 border border-dashed border-rule-strong p-16 text-center text-sm text-muted">
             Nothing listed right now. Check back soon.
           </p>
         ) : (
-          <div className="mt-16 space-y-20">
-            {activeCategories.map((category) => {
-              const items = getProductsByCategory(category.id);
-              return (
-                <section key={category.id} aria-labelledby={`category-${category.id}`}>
-                  <Reveal className="flex flex-wrap items-end justify-between gap-4 border-b border-rule pb-5">
-                    <div>
-                      <h2 id={`category-${category.id}`} className="display text-4xl leading-none sm:text-5xl">
-                        {category.label}
-                      </h2>
-                      <p className="mt-3 text-sm text-muted">{category.description}</p>
-                    </div>
-                    <p className="label pb-1 text-[0.55rem] text-muted">
-                      {String(items.length).padStart(2, "0")}{" "}
-                      {items.length === 1 ? "listing" : "listings"}
-                    </p>
-                  </Reveal>
-
-                  <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {items.map((product, index) => (
-                      <ProductCard
-                        key={product.id}
-                        product={product}
-                        index={all.indexOf(product)}
-                        delay={index * 80}
-                      />
-                    ))}
-                  </div>
-                </section>
-              );
-            })}
-          </div>
+          <CatalogBrowser products={all} categories={activeCategories} />
         )}
 
         {/* Availability key */}
@@ -114,8 +86,6 @@ export default function CatalogPage() {
             ))}
           </dl>
         </Reveal>
-
-        <ReviewsSection products={all} />
       </div>
     </>
   );

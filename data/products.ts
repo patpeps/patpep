@@ -55,6 +55,21 @@ export interface Product {
   image: string | null;
   /** Per-product research-use disclaimer shown on the card. */
   disclaimer: string;
+
+  /* ---- Detail popup. All optional: leave any of these out and the popup
+   *      simply omits that block. -------------------------------------- */
+
+  /**
+   * What the material actually is: class, structure, what it binds.
+   * Keep this factual. Describe the compound, never an effect on a person
+   * or animal, which would contradict the research-use-only position of
+   * the whole site.
+   */
+  details?: string;
+  /** What laboratories use it for. Assays and models, not outcomes. */
+  researchUse?: string[];
+  /** Storage and reconstitution notes. */
+  handling?: string;
 }
 
 /**
@@ -82,6 +97,15 @@ export const products: Product[] = [
     visible: true,
     image: null,
     disclaimer: DEFAULT_DISCLAIMER,
+    details:
+      "A synthetic peptide of 39 amino acids, built on the GIP backbone with a fatty acid chain attached so it stays intact longer in solution. What makes it unusual in the literature is that it acts at three receptors rather than one: GIP, GLP-1 and glucagon. Supplied lyophilized, as a white powder in a sealed vial.",
+    researchUse: [
+      "Receptor binding and selectivity assays across GIP, GLP-1 and glucagon receptors",
+      "cAMP signalling and downstream pathway work in cell culture",
+      "Comparative studies against single and dual receptor agonists",
+    ],
+    handling:
+      "Keep the sealed vial cold and out of the light. Reconstitute with bacteriostatic water, then keep it refrigerated and use it within the window your protocol allows.",
   },
   {
     id: "ghk-cu",
@@ -96,6 +120,15 @@ export const products: Product[] = [
     visible: true,
     image: null,
     disclaimer: DEFAULT_DISCLAIMER,
+    details:
+      "A tripeptide, glycyl-L-histidyl-L-lysine, bound to a copper(II) ion. It occurs naturally in human plasma, which is where it was first isolated in the 1970s, and it has been a fixture of cell culture work ever since, mostly for what it does to gene expression in fibroblasts. The copper is part of the molecule, not an additive, and gives the powder its blue colour.",
+    researchUse: [
+      "Collagen and extracellular matrix protein expression in fibroblast culture",
+      "Gene expression profiling",
+      "Copper transport and metal-binding chemistry",
+    ],
+    handling:
+      "Light sensitive. Keep the sealed vial cold and dark, and protect the solution from light once reconstituted.",
   },
   {
     id: "bacteriostatic-water",
@@ -110,6 +143,14 @@ export const products: Product[] = [
     visible: true,
     image: null,
     disclaimer: DEFAULT_DISCLAIMER,
+    details:
+      "Sterile water with roughly 0.9% benzyl alcohol added as a preservative. The preservative is the whole point: it is what lets a vial be entered more than once without the contents spoiling, which is why this rather than plain sterile water is the usual choice for reconstituting a lyophilized powder you plan to draw from repeatedly.",
+    researchUse: [
+      "Reconstituting lyophilized peptides",
+      "Preparing stock solutions at the bench",
+    ],
+    handling:
+      "Store at room temperature. Wipe the stopper before each entry and keep track of how long the vial has been open.",
   },
 ];
 

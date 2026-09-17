@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
 import StatusBadge from "@/components/StatusBadge";
@@ -7,15 +9,22 @@ import { cn } from "@/lib/utils";
 /**
  * Specimen record card. Every value comes from /data/products.ts. This site
  * is informational, so there is no ordering, cart, or checkout anywhere.
+ *
+ * With `onOpen` the whole card becomes one button that opens the detail
+ * popup. Without it the card is plain, which is how the home page uses it.
  */
 export default function ProductCard({
   product,
   index,
   delay = 0,
+  reviewCount = 0,
+  onOpen,
 }: {
   product: Product;
   index?: number;
   delay?: number;
+  reviewCount?: number;
+  onOpen?: () => void;
 }) {
   const muted = product.status !== "available";
 
@@ -25,7 +34,10 @@ export default function ProductCard({
       motion="up"
       delay={delay}
       id={product.id}
-      className="press-card group relative flex scroll-mt-32 flex-col border border-rule bg-paper hover:border-ink"
+      className={cn(
+        "press-card group relative flex scroll-mt-32 flex-col border border-rule bg-paper hover:border-ink",
+        onOpen && "cursor-pointer",
+      )}
     >
       {/* Record header */}
       <div className="flex items-center justify-between border-b border-rule px-4 py-2.5">
@@ -102,7 +114,19 @@ export default function ProductCard({
           </div>
         </dl>
 
-        <p className="mt-4 text-xs leading-relaxed text-muted">{product.disclaimer}</p>
+        {onOpen ? (
+          <p className="mt-5 flex items-center justify-between gap-3 border-t border-rule pt-4">
+            <span className="label text-[0.55rem] text-acid-deep">
+              Details &amp; reviews
+              {reviewCount > 0 && ` (${reviewCount})`}
+            </span>
+            <span className="arrow-shift text-sm" aria-hidden="true">
+              &rarr;
+            </span>
+          </p>
+        ) : (
+          <p className="mt-4 text-xs leading-relaxed text-muted">{product.disclaimer}</p>
+        )}
       </div>
 
       {/* Accent rule on hover */}
@@ -110,6 +134,16 @@ export default function ProductCard({
         aria-hidden="true"
         className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-acid transition-transform duration-500 group-hover:scale-x-100"
       />
+
+      {/* The whole card is the control. Sits above the card, below the modal. */}
+      {onOpen && (
+        <button
+          type="button"
+          onClick={onOpen}
+          className="absolute inset-0 z-10"
+          aria-label={`Open details and reviews for ${product.name}`}
+        />
+      )}
     </Reveal>
   );
 }

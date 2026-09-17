@@ -1,46 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import ReviewForm from "@/components/reviews/ReviewForm";
 import StarRating from "@/components/reviews/StarRating";
 import type { Product } from "@/data/products";
-import {
-  averageRating,
-  fetchPublishedReviews,
-  formatReviewDate,
-  groupByProduct,
-  type Review,
-} from "@/lib/reviews";
-
-type Load = "loading" | "ready" | "error";
+import { averageRating, formatReviewDate, groupByProduct, type Review } from "@/lib/reviews";
 
 /**
  * Reviews written by visitors. Nothing here is seeded, sampled or generated:
  * the list is empty until real people submit reviews and those reviews are
  * published by hand.
+ *
+ * The data is fetched by CatalogBrowser and passed in, so the popup and this
+ * section share one request.
  */
-export default function ReviewsSection({ products }: { products: Product[] }) {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [load, setLoad] = useState<Load>("loading");
-
-  useEffect(() => {
-    let cancelled = false;
-
-    fetchPublishedReviews()
-      .then((result) => {
-        if (cancelled) return;
-        setReviews(result);
-        setLoad("ready");
-      })
-      .catch(() => {
-        if (!cancelled) setLoad("error");
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
+export default function ReviewsSection({
+  products,
+  reviews,
+  load,
+  formProductId,
+}: {
+  products: Product[];
+  reviews: Review[];
+  load: "loading" | "ready" | "error";
+  /** Preselects a listing in the form, set when someone clicks through from a popup. */
+  formProductId?: string;
+}) {
   const byProduct = groupByProduct(reviews);
   const overall = averageRating(reviews);
 
@@ -65,9 +49,7 @@ export default function ReviewsSection({ products }: { products: Product[] }) {
       <div className="mt-8 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
         {/* The reviews themselves */}
         <div>
-          {load === "loading" && (
-            <p className="label text-[0.58rem] text-muted">Loading reviews</p>
-          )}
+          {load === "loading" && <p className="label text-[0.58rem] text-muted">Loading reviews</p>}
 
           {load === "error" && (
             <p className="border-l-2 border-oxide bg-oxide-soft/60 py-4 pl-5 pr-4 text-sm leading-relaxed">
@@ -95,7 +77,7 @@ export default function ReviewsSection({ products }: { products: Product[] }) {
                   const average = averageRating(forProduct);
 
                   return (
-                    <div key={product.id}>
+                    <div key={product.id} id={`reviews-${product.id}`} className="scroll-mt-36">
                       <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-rule pb-3">
                         <h3 className="display text-2xl leading-none">{product.name}</h3>
                         <span className="flex items-center gap-3">
@@ -129,9 +111,13 @@ export default function ReviewsSection({ products }: { products: Product[] }) {
           )}
         </div>
 
-        {/* The form */}
-        <div className="lg:sticky lg:top-40 lg:self-start">
-          <ReviewForm products={products} />
+        {/* The form. Remounts when a popup preselects a different listing. */}
+        <div id="review-form" className="scroll-mt-36 lg:sticky lg:top-40 lg:self-start">
+          <ReviewForm
+            key={formProductId ?? "default"}
+            products={products}
+            defaultProductId={formProductId}
+          />
         </div>
       </div>
     </section>
